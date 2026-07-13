@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# AI クローラー（学習目的のクロールを許可）
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://sumai-doctor-smile.search-mania.net/sitemap.xml

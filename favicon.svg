@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="8" ry="8" fill="#1B3A6B"/>
+  <rect x="4" y="4" width="56" height="56" rx="6" ry="6"
+        fill="none" stroke="#E8720C" stroke-width="0.8" opacity="0.35"/>
+  <text x="32" y="32"
+        font-family="Outfit, Georgia, serif"
+        font-size="36"
+        font-weight="700"
+        fill="#E8720C"
+        text-anchor="middle"
+        dominant-baseline="central"
+        letter-spacing="2">S</text>
+</svg>

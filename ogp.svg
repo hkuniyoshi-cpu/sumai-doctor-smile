@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1B3A6B"/>
+      <stop offset="100%" style="stop-color:#112A52"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#E8720C"/>
+      <stop offset="50%" style="stop-color:#F08C3A"/>
+      <stop offset="100%" style="stop-color:#E8720C"/>
+    </linearGradient>
+    <linearGradient id="goldV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F08C3A"/>
+      <stop offset="100%" style="stop-color:#C05A0A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <rect x="72"   y="72"    width="2"    height="486" fill="url(#goldV)" opacity="0.6"/>
+  <rect x="1126" y="72"    width="2"    height="486" fill="url(#goldV)" opacity="0.6"/>
+  <rect x="72"   y="72"    width="1056" height="1.5" fill="url(#gold)"  opacity="0.5"/>
+  <rect x="72"   y="556.5" width="1056" height="1.5" fill="url(#gold)"  opacity="0.5"/>
+
+  <rect x="72"   y="72"   width="32" height="2"  fill="#E8720C"/>
+  <rect x="72"   y="72"   width="2"  height="32" fill="#E8720C"/>
+  <rect x="1096" y="72"   width="32" height="2"  fill="#E8720C"/>
+  <rect x="1126" y="72"   width="2"  height="32" fill="#E8720C"/>
+  <rect x="72"   y="556"  width="32" height="2"  fill="#E8720C"/>
+  <rect x="72"   y="526"  width="2"  height="32" fill="#E8720C"/>
+  <rect x="1096" y="556"  width="32" height="2"  fill="#E8720C"/>
+  <rect x="1126" y="526"  width="2"  height="32" fill="#E8720C"/>
+
+  <rect x="540" y="148" width="120" height="1" fill="url(#gold)" opacity="0.7"/>
+
+  <text x="600" y="188" font-family="Georgia, serif" font-size="13" fill="#E8720C" text-anchor="middle" letter-spacing="7" opacity="0.9">EXTERIOR · REFORM · AC CLEANING · YAESE OKINAWA</text>
+
+  <text x="600" y="316" font-family="Georgia, 'Times New Roman', serif" font-size="96" fill="url(#gold)" text-anchor="middle" letter-spacing="10" font-weight="400">DR. SMILE</text>
+
+  <text x="600" y="378" font-family="'Hiragino Mincho ProN', 'Yu Mincho', serif" font-size="24" fill="#FFFFFF" text-anchor="middle" letter-spacing="8" opacity="0.9">株式会社住まいドクタースマイル</text>
+
+  <rect x="420" y="410" width="360" height="1" fill="url(#gold)" opacity="0.5"/>
+
+  <text x="600" y="448" font-family="Georgia, serif" font-size="15" fill="#E8720C" text-anchor="middle" letter-spacing="4" opacity="0.85">外 壁 塗 装 ・ リ フ ォ ー ム ・ エ ア コ ン 掃 除</text>
+
+  <text x="600" y="510" font-family="Georgia, serif" font-size="14" fill="#8BA4C0" text-anchor="middle" letter-spacing="3">sumai-doctor-smile.search-mania.net</text>
+
+  <polygon points="600,130 606,136 600,142 594,136" fill="#E8720C" opacity="0.7"/>
+  <polygon points="600,488 604,492 600,496 596,492" fill="#E8720C" opacity="0.5"/>
+</svg>
