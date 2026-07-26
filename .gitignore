@@ -8,3 +8,4 @@ deploy.yml
 netlify.toml
 .DS_Store
 Thumbs.db
+.wrangler/

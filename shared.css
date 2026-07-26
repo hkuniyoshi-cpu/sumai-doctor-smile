@@ -1646,6 +1646,54 @@ a.blog-card { text-decoration: none; color: inherit; }
 .produced-by a:hover { color: var(--accent); }
 
 /* ============================================================
+   パートナーサイト表示（公式サイトあり・フルワイドバー）
+   ============================================================ */
+.partner-notice {
+  background: linear-gradient(90deg, rgba(232,114,12,.08), rgba(232,114,12,.14), rgba(232,114,12,.08));
+  border-top: 1px solid rgba(232,114,12,.25);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-left: var(--sb-w);
+}
+.partner-notice p {
+  font-family: var(--sans-jp);
+  font-size: 12px;
+  color: rgba(255,255,255,.75);
+  letter-spacing: .06em;
+  margin: 0;
+  line-height: 1.6;
+}
+.partner-notice a {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--sans-jp);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  border-radius: 2px;
+  transition: background .25s, transform .25s;
+  white-space: nowrap;
+}
+.partner-notice a:hover {
+  background: #C85E08;
+  transform: translateY(-2px);
+}
+@media (max-width: 960px) {
+  .partner-notice { margin-left: 0; }
+}
+@media (max-width: 600px) {
+  .partner-notice { flex-direction: column; gap: 12px; padding: 16px 20px; text-align: center; }
+  .partner-notice p { font-size: 11px; }
+}
+
+/* ============================================================
    ヒーロー入場アニメーション初期状態
    ============================================================ */
 .hero-anim-1 {
