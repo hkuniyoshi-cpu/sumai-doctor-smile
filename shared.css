@@ -8,19 +8,31 @@
    変数
    ============================================================ */
 :root {
-  --bg:           #FFFFFF;
-  --bg-2:         #F4F6F8;
-  --ink:          #111827;
+  --bg:           #FDFBF7;
+  --bg-2:         #FFF6EC;
+  --bg-3:         #EEF4FF;
+  --ink:          #112040;
   --ink-soft:     #4A5568;
-  --accent:       #E8720C;
-  --accent-faded: rgba(232,114,12,.12);
-  --navy:         #1B3A6B;
-  --navy-dark:    #0D1E3D;
-  --navy-2:       #2A4F8F;
+  --accent:       #FF8419;
+  --accent-2:     #FFB84D;
+  --accent-faded: rgba(255,132,25,.14);
+  --navy:         #1E4488;
+  --navy-dark:    #0F1F42;
+  --navy-2:       #2E5FB4;
+  --sky:          #4EA0EF;
   --muted:        #8896A8;
-  --cream:        #F8FAFC;
-  --line:         rgba(27,58,107,.1);
-  --header-bg:    #1B3A6B;
+  --cream:        #FFF9F0;
+  --line:         rgba(30,68,136,.12);
+  --header-bg:    linear-gradient(135deg, #0F1F42 0%, #1E4488 100%);
+
+  /* グラデーション（明るく・鮮やか） */
+  --grad-hero:    linear-gradient(135deg, #0F1F42 0%, #1E4488 45%, #2E5FB4 100%);
+  --grad-warm:    linear-gradient(135deg, #FFF6EC 0%, #FFFBF3 100%);
+  --grad-cool:    linear-gradient(135deg, #EEF4FF 0%, #F7FAFF 100%);
+  --grad-accent:  linear-gradient(135deg, #FF8419 0%, #FFB84D 100%);
+  --grad-navy-warm: linear-gradient(135deg, #1E4488 0%, #2E5FB4 50%, #FF8419 130%);
+  --grad-sidebar: linear-gradient(180deg, #0F1F42 0%, #1E4488 100%);
+
   --sans:         'Outfit', sans-serif;
   --sans-jp:      'Noto Sans JP', sans-serif;
   --ease-out:     cubic-bezier(.22, 1, .36, 1);
@@ -59,7 +71,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
    ============================================================ */
 #page-loader {
   position: fixed; inset: 0;
-  background: var(--navy-dark);
+  background: var(--grad-hero);
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -70,7 +82,9 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 }
 #page-loader.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
 .loader-stamp {
-  width: 72px; height: 72px;
+  width: 108px; height: auto; max-height: 108px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,.35));
   animation: ld-stamp .7s var(--ease-out) both, ld-pulse 2.4s ease-in-out .7s infinite;
 }
 .loader-name {
@@ -116,12 +130,13 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   position: fixed;
   left: 0; top: 0; bottom: 0;
   width: var(--sb-w);
-  background: var(--navy-dark);
+  background: var(--grad-sidebar);
   z-index: 200;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: 1px solid rgba(232,114,12,.15);
+  border-right: 1px solid rgba(255,132,25,.18);
+  box-shadow: 2px 0 20px rgba(15,31,66,.15);
 }
 .sb-brand {
   width: 100%;
@@ -130,22 +145,16 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding: 6px;
 }
-.sb-brand-inner {
-  width: 34px; height: 34px;
-  background: var(--accent);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--sans);
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
+.sb-brand-logo {
+  width: 44px; height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
   transition: transform .3s var(--ease-out);
 }
-.sb-brand:hover .sb-brand-inner { transform: scale(1.08); }
+.sb-brand:hover .sb-brand-logo { transform: scale(1.12) rotate(-4deg); }
 
 .sb-nav {
   flex: 1;
@@ -222,9 +231,9 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   transition: background .4s var(--ease-std), box-shadow .4s var(--ease-std);
 }
 .nav.scrolled {
-  background: rgba(13,30,61,.96);
+  background: linear-gradient(135deg, rgba(15,31,66,.94) 0%, rgba(30,68,136,.94) 100%);
   backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(232,114,12,.15);
+  box-shadow: 0 1px 0 rgba(255,132,25,.28), 0 8px 24px rgba(15,31,66,.18);
 }
 .nav-inner {
   max-width: var(--max);
@@ -243,6 +252,13 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   flex: 1;
 }
 .nav-brand-icon { font-size: 20px; }
+.nav-brand-logo {
+  width: 40px; height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.3));
+  transition: transform .3s var(--ease-out);
+}
+.nav-brand:hover .nav-brand-logo { transform: scale(1.1) rotate(-4deg); }
 .nav-brand-text { display: flex; flex-direction: column; line-height: 1.2; }
 .nav-brand-ja-txt {
   font-family: var(--sans-jp);
@@ -262,20 +278,25 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .nav-links { display: none; }
 
 .btn-nav {
-  background: var(--accent);
+  background: var(--grad-accent);
   color: #fff;
   border: none;
-  padding: 9px 18px;
-  border-radius: 3px;
+  padding: 10px 20px;
+  border-radius: 24px;
   font-family: var(--sans-jp);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .06em;
-  transition: background .25s;
+  transition: all .3s;
   white-space: nowrap;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(255,132,25,.35);
 }
-.btn-nav:hover { background: #C85E08; }
+.btn-nav:hover {
+  background: linear-gradient(135deg, #FF9430 0%, #FFC55E 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(255,132,25,.5);
+}
 
 .nav-toggle {
   display: none;
@@ -362,11 +383,27 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .hero {
   position: relative;
   min-height: 100vh;
-  background: var(--navy-dark);
+  background: var(--grad-hero);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+}
+/* ヒーローに彩度のあるグロー */
+.hero .hero-inner::before {
+  content: '';
+  position: absolute;
+  left: -80px; top: 20%;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(255,132,25,.25), transparent 70%);
+  filter: blur(40px);
+  z-index: 0;
+  pointer-events: none;
+}
+.hero::before {
+  background:
+    linear-gradient(to right,  rgba(15,31,66,.86) 0%, rgba(30,68,136,.52) 60%, transparent 100%),
+    linear-gradient(to top,    rgba(15,31,66,.96) 0%, rgba(30,68,136,.4) 50%, transparent 100%) !important;
 }
 
 /* CMS 写真背景 */
@@ -657,15 +694,16 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   overflow: hidden;
 }
 .btn-primary {
-  background: var(--accent);
+  background: var(--grad-accent);
   color: #fff;
-  border: 2px solid var(--accent);
+  border: none;
+  padding: 15px 30px;
+  box-shadow: 0 4px 16px rgba(255,132,25,.35);
 }
 .btn-primary:hover {
-  background: #C85E08;
-  border-color: #C85E08;
+  background: linear-gradient(135deg, #FF9430 0%, #FFC55E 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(232,114,12,.35);
+  box-shadow: 0 10px 30px rgba(255,132,25,.5);
 }
 .btn-outline-white {
   background: transparent;
@@ -786,7 +824,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    ABOUT
    ============================================================ */
-.about { background: var(--bg); }
+.about { background: var(--grad-warm); }
 
 .about-paras p {
   color: var(--ink-soft);
@@ -833,7 +871,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    MENU / SERVICE
    ============================================================ */
-.menu-sec { background: var(--bg-2); }
+.menu-sec { background: var(--grad-cool); }
 
 .menu-grid {
   display: grid;
@@ -923,7 +961,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    FEATURES
    ============================================================ */
-.features { background: var(--bg); }
+.features { background: var(--grad-warm); }
 
 .features-list {
   display: grid;
@@ -981,7 +1019,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    FOR YOU
    ============================================================ */
-.for-you { background: var(--navy-dark); }
+.for-you { background: linear-gradient(135deg, #0F1F42 0%, #1E4488 60%, #2E5FB4 100%); }
 .for-you .section-title { color: #fff; }
 .for-you .eyebrow { color: var(--accent); }
 
@@ -1025,7 +1063,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    REVIEWS
    ============================================================ */
-.reviews-sec { background: var(--bg-2); }
+.reviews-sec { background: var(--grad-cool); }
 
 .reviews-grid {
   display: grid;
@@ -1133,7 +1171,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    BLOG
    ============================================================ */
-#blog { background: var(--bg); }
+#blog { background: var(--grad-warm); }
 
 .wall {
   display: grid;
@@ -1227,7 +1265,7 @@ a.blog-card { text-decoration: none; color: inherit; }
 /* ============================================================
    ACCESS
    ============================================================ */
-.access-sec { background: var(--bg-2); }
+.access-sec { background: var(--grad-cool); }
 
 .access-grid {
   display: grid;
@@ -1303,7 +1341,7 @@ a.blog-card { text-decoration: none; color: inherit; }
 /* ============================================================
    SNS
    ============================================================ */
-.sns-sec { background: var(--bg); }
+.sns-sec { background: var(--grad-warm); }
 
 .sns-grid {
   display: grid;
@@ -1365,7 +1403,7 @@ a.blog-card { text-decoration: none; color: inherit; }
 /* ============================================================
    ESTIMATE / DELIVERY
    ============================================================ */
-.estimate-sec { background: var(--navy-dark); }
+.estimate-sec { background: linear-gradient(135deg, #0F1F42 0%, #1E4488 55%, #FF8419 220%); }
 .estimate-sec .section-title,
 .estimate-sec .eyebrow,
 .estimate-sec .section-subtitle { color: rgba(255,255,255,.9); }
@@ -1433,7 +1471,7 @@ a.blog-card { text-decoration: none; color: inherit; }
 /* ============================================================
    FAQ
    ============================================================ */
-.faq-sec { background: var(--bg-2); }
+.faq-sec { background: var(--grad-cool); }
 
 .faq-list { }
 .faq-item {
@@ -1483,8 +1521,19 @@ a.blog-card { text-decoration: none; color: inherit; }
    CTA
    ============================================================ */
 .cta {
-  background: var(--navy);
+  background: linear-gradient(135deg, #0F1F42 0%, #1E4488 40%, #FF8419 130%);
   padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.cta::after {
+  content: '';
+  position: absolute;
+  right: -100px; top: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,184,77,.35), transparent 65%);
+  filter: blur(40px);
+  pointer-events: none;
 }
 .cta-box {
   padding: 100px 0;
@@ -1539,18 +1588,18 @@ a.blog-card { text-decoration: none; color: inherit; }
   flex-wrap: wrap;
 }
 .btn-cta-primary {
-  background: var(--accent);
+  background: var(--grad-accent);
   color: #fff;
-  border: 2px solid var(--accent);
-  padding: 16px 40px;
+  border: none;
+  padding: 18px 42px;
   font-size: 15px;
   border-radius: 2px;
+  box-shadow: 0 6px 20px rgba(255,132,25,.4);
 }
 .btn-cta-primary:hover {
-  background: #C85E08;
-  border-color: #C85E08;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(232,114,12,.4);
+  background: linear-gradient(135deg, #FF9430 0%, #FFC55E 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(255,132,25,.55);
 }
 .btn-cta-outline {
   background: transparent;
@@ -1570,9 +1619,9 @@ a.blog-card { text-decoration: none; color: inherit; }
    FOOTER
    ============================================================ */
 .footer {
-  background: var(--navy-dark);
+  background: linear-gradient(180deg, #0F1F42 0%, #1E4488 100%);
   padding: 72px 0 0;
-  border-top: 1px solid rgba(232,114,12,.15);
+  border-top: 1px solid rgba(255,132,25,.25);
 }
 .footer-inner {
   display: grid;
