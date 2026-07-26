@@ -66,6 +66,9 @@
 </head>
 <body>
 
+<!-- スクロール進捗バー -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
 <!-- ============================================================
      ページローダー
      ============================================================ -->
@@ -134,6 +137,9 @@
        HERO — フルブリード エディトリアルスタイル
        ============================================================ -->
   <section class="hero" id="hero" aria-label="メインビジュアル">
+
+    <!-- 装飾：浮遊オーブ -->
+    <div class="hero-particles" aria-hidden="true"></div>
 
     <!-- CMS 写真背景（applyHero が設定） -->
     <div class="hero-photo-bg" id="heroPhotoBg"></div>
@@ -235,15 +241,65 @@
             <h2 class="section-title reveal">住まいのかかりつけ医<br>として</h2>
             <span class="sec-line line-draw"></span>
           </div>
-          <div class="about-paras reveal" id="aboutParas">
-            <p>八重瀬町を拠点に、外壁塗装・屋根工事・エアコンクリーニングなど、住まいに関するあらゆるお悩みに対応しています。</p>
-            <p>ロープアクセス工法を採用することで、足場を必要とせず大幅なコスト削減を実現。沖縄県全域へお伺いします。</p>
-            <p>「かかりつけ医」のように、住まいのことを気軽に相談できるパートナーでありたい。それが私たちの想いです。</p>
+
+          <!-- 絵本仕立ての About（テキストは残しSEO維持） -->
+          <div class="about-book" id="aboutBook">
+            <!-- scene 1 -->
+            <article class="ab-scene reveal-blur" data-page="1">
+              <div class="ab-illust">
+                <img src="/assets/about/scene1-doctor.svg" alt="住まいのかかりつけ医のイラスト" decoding="async"/>
+              </div>
+              <div class="ab-text">
+                <span class="ab-badge">Chapter 01</span>
+                <h3 class="ab-headline">住まいの<em>かかりつけ医</em>として</h3>
+                <p data-para="1">株式会社住まいドクタースマイルは、2015年11月の創業以来、沖縄県島尻郡八重瀬町を拠点に、外壁塗装・屋根工事・防水・リフォーム・エアコンクリーニングまでを一手に担う地域密着型の住宅メンテナンス企業である。目指すのは「住まいのかかりつけ医」——建物のちょっとした不調から大掛かりな塗り替えまで、暮らしの温度感を大切にしながら丁寧に受け止めることを信条としている。</p>
+              </div>
+            </article>
+
+            <!-- scene 2 -->
+            <article class="ab-scene ab-reverse reveal-blur" data-page="2">
+              <div class="ab-illust">
+                <img src="/assets/about/scene2-climate.svg" alt="沖縄の強い日差し・塩害・台風から住まいを守るイラスト" decoding="async"/>
+              </div>
+              <div class="ab-text">
+                <span class="ab-badge">Chapter 02</span>
+                <h3 class="ab-headline">沖縄の気候に<em>本当に耐える</em>塗装を</h3>
+                <p data-para="2">沖縄の住宅は、強い日差し、絶え間ない塩害、そして毎年やってくる台風という、本土とは比べものにならない過酷な環境にさらされている。だからこそ当社は、塗料の選定から下地処理、防水仕様の設計に至るまで、沖縄の気候に本当に耐え得るかを一つひとつ吟味している。表面を整えるだけの塗装ではなく、10年先も安心して暮らせる住まいを残すことが、当社の使命である。</p>
+              </div>
+            </article>
+
+            <!-- scene 3 -->
+            <article class="ab-scene reveal-blur" data-page="3">
+              <div class="ab-illust">
+                <img src="/assets/about/scene3-rope.svg" alt="ロープアクセス工法で足場費用ゼロ・工期短縮のイラスト" decoding="async"/>
+              </div>
+              <div class="ab-text">
+                <span class="ab-badge">Chapter 03</span>
+                <h3 class="ab-headline">ロープアクセスで<em>足場費用ゼロ</em></h3>
+                <p data-para="3">最大の強みは、ロープアクセス工法を採用していることである。ビルやマンションの高所、狭小地の外壁など、足場を組めば数十万円かかる現場でも、ロープアクセスなら足場費用ゼロで、しかも工期を大幅に短縮できる。「足場代が高いから」と諦めていた補修や点検にも、気軽に一歩踏み出していただける体制を整えている。</p>
+              </div>
+            </article>
+
+            <!-- scene 4 -->
+            <article class="ab-scene ab-reverse reveal-blur" data-page="4">
+              <div class="ab-illust">
+                <img src="/assets/about/scene4-onestop.svg" alt="住まいのあらゆる困りごとにワンストップで対応するイラスト" decoding="async"/>
+              </div>
+              <div class="ab-text">
+                <span class="ab-badge">Chapter 04</span>
+                <h3 class="ab-headline">住まいのすべてを<em>ワンストップ</em>で</h3>
+                <p data-para="4">外壁・屋根の塗装から、雨漏り診断、エアコンクリーニング、ハウスクリーニング、内部解体、不用品回収まで——住まいに関わるあらゆる困りごとにワンストップで対応する。自社一貫施工で中間マージンを排し、明朗会計・現地調査無料・お見積り無料を徹底している。八重瀬から沖縄全域へ、住まいと家族の暮らしを守り続けたい。</p>
+              </div>
+            </article>
           </div>
+
           <blockquote class="about-quote reveal" id="aboutQuote">
             「お客様の大切な住まいを、長く守り続ける」がわたしたちの使命です。
           </blockquote>
-          <div class="about-photos reveal-stagger" id="aboutPhotos"></div>
+
+          <!-- 旧CMS互換のため隠しコンテナだけ残す（applyAboutが埋める） -->
+          <div class="about-paras" id="aboutParas" hidden></div>
+          <div class="about-photos" id="aboutPhotos" hidden></div>
         </div>
       </div>
     </div>
@@ -727,11 +783,15 @@ function applyHero(h) {
 
 function applyAbout(a) {
   if (!a || typeof a !== 'object') return;
-  var paras = document.getElementById('aboutParas');
-  if (paras && Array.isArray(a.paragraphs) && a.paragraphs.length) {
-    paras.innerHTML = a.paragraphs.map(function(p) {
-      return '<p>' + esc(p) + '</p>';
-    }).join('');
+  /* about-book シーンの本文を CMS 段落で上書き（data-para で 1:1 マッピング） */
+  if (Array.isArray(a.paragraphs) && a.paragraphs.length) {
+    a.paragraphs.forEach(function(p, i) {
+      var el = document.querySelector('.about-book [data-para="' + (i + 1) + '"]');
+      if (el) el.textContent = p;
+    });
+    /* 互換用の隠しコンテナも埋める */
+    var paras = document.getElementById('aboutParas');
+    if (paras) paras.innerHTML = a.paragraphs.map(function(p){return '<p>' + esc(p) + '</p>';}).join('');
   }
   var quote = document.getElementById('aboutQuote');
   if (quote && a.quote) quote.textContent = a.quote;
@@ -1033,7 +1093,7 @@ var revealIO = new IntersectionObserver(function(entries) {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.reveal, .reveal-stagger, .line-draw').forEach(function(el) {
+document.querySelectorAll('.reveal, .reveal-stagger, .reveal-blur, .reveal-rotate, .reveal-scale, .line-draw').forEach(function(el) {
   revealIO.observe(el);
 });
 
@@ -1100,6 +1160,32 @@ var countIO = new IntersectionObserver(function(entries) {
 }, { threshold: 0.5 });
 var heroEl = document.getElementById('hero');
 if (heroEl) countIO.observe(heroEl);
+
+/* ----------------------------------------------------------
+   スクロール進捗バー
+   ---------------------------------------------------------- */
+var _progBar = document.getElementById('scrollProgress');
+if (_progBar) {
+  var _tick = function() {
+    var h = document.documentElement;
+    var pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    _progBar.style.width = pct + '%';
+  };
+  window.addEventListener('scroll', _tick, { passive: true });
+  _tick();
+}
+
+/* ----------------------------------------------------------
+   パララックス：Hero写真背景 & コラージュ
+   ---------------------------------------------------------- */
+var _bgP = document.getElementById('heroPhotoBg');
+var _clP = document.getElementById('heroPhotoCollage');
+window.addEventListener('scroll', function() {
+  var y = window.scrollY;
+  if (y > 900) return;
+  if (_bgP) _bgP.style.transform = 'translateY(' + (y * 0.25) + 'px) scale(' + (1 + y * 0.0002) + ')';
+  if (_clP) _clP.style.transform = 'translateY(' + (y * 0.15) + 'px)';
+}, { passive: true });
 
 /* ----------------------------------------------------------
    ヒーロー入場アニメーション

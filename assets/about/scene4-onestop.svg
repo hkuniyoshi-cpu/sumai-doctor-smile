@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="s4bg" cx=".5" cy=".5">
+      <stop offset="0" stop-color="#FFF7E6"/>
+      <stop offset="1" stop-color="#FFCB99"/>
+    </radialGradient>
+    <linearGradient id="s4houseRoof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF6B5B"/>
+      <stop offset="1" stop-color="#FF4E70"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" fill="url(#s4bg)" rx="16"/>
+  <!-- house in center -->
+  <g transform="translate(200 165)">
+    <path d="M-55 -10 L-55 70 L55 70 L55 -10 L0 -55 Z" fill="#fff" stroke="#1F52B0" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M-58 -8 L0 -55 L58 -8" fill="url(#s4houseRoof)" stroke="#1F52B0" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="-12" y="40" width="24" height="30" fill="#FF7A0F"/>
+    <circle cx="7" cy="55" r="2" fill="#FFD84C"/>
+    <rect x="-42" y="8" width="22" height="20" fill="#DBE9FF" stroke="#1F52B0" stroke-width="1.5"/>
+    <rect x="20" y="8" width="22" height="20" fill="#DBE9FF" stroke="#1F52B0" stroke-width="1.5"/>
+    <!-- heart center -->
+    <path d="M0 -25 Q-10 -32 -10 -37 A6 6 0 0 1 0 -38 A6 6 0 0 1 10 -37 Q10 -32 0 -25 Z" fill="#FF4E70"/>
+  </g>
+  <!-- Orbiting service bubbles (5 services) -->
+  <g font-family="'Noto Sans JP', sans-serif" font-size="10" font-weight="bold">
+    <!-- 外壁塗装 -->
+    <g transform="translate(60 90)">
+      <circle r="30" fill="#FF7A0F" stroke="#fff" stroke-width="3"/>
+      <text y="-3" text-anchor="middle" fill="#fff">外壁</text>
+      <text y="10" text-anchor="middle" fill="#fff">塗装</text>
+    </g>
+    <line x1="80" y1="105" x2="150" y2="140" stroke="#FF7A0F" stroke-width="2" stroke-dasharray="3 3" opacity=".5"/>
+    <!-- 屋根防水 -->
+    <g transform="translate(340 90)">
+      <circle r="30" fill="#1F52B0" stroke="#fff" stroke-width="3"/>
+      <text y="-3" text-anchor="middle" fill="#fff">屋根</text>
+      <text y="10" text-anchor="middle" fill="#FFD84C">防水</text>
+    </g>
+    <line x1="320" y1="105" x2="250" y2="140" stroke="#1F52B0" stroke-width="2" stroke-dasharray="3 3" opacity=".5"/>
+    <!-- エアコン -->
+    <g transform="translate(60 250)">
+      <circle r="28" fill="#34C8FF" stroke="#fff" stroke-width="3"/>
+      <text y="-3" text-anchor="middle" fill="#fff">エアコン</text>
+      <text y="10" text-anchor="middle" fill="#fff">洗浄</text>
+    </g>
+    <line x1="80" y1="235" x2="150" y2="200" stroke="#34C8FF" stroke-width="2" stroke-dasharray="3 3" opacity=".5"/>
+    <!-- リフォーム -->
+    <g transform="translate(340 250)">
+      <circle r="28" fill="#4CE0C1" stroke="#fff" stroke-width="3"/>
+      <text y="-3" text-anchor="middle" fill="#0F2560">リフォーム</text>
+      <text y="10" text-anchor="middle" fill="#0F2560">・解体</text>
+    </g>
+    <line x1="320" y1="235" x2="250" y2="200" stroke="#4CE0C1" stroke-width="2" stroke-dasharray="3 3" opacity=".5"/>
+    <!-- 不用品回収 -->
+    <g transform="translate(200 285)">
+      <circle r="26" fill="#FFBD3A" stroke="#fff" stroke-width="3"/>
+      <text y="-3" text-anchor="middle" fill="#0F2560">不用品</text>
+      <text y="10" text-anchor="middle" fill="#0F2560">回収</text>
+    </g>
+    <line x1="200" y1="257" x2="200" y2="240" stroke="#FFBD3A" stroke-width="2" stroke-dasharray="3 3" opacity=".5"/>
+  </g>
+  <!-- Central "ONE STOP" ring -->
+  <g transform="translate(200 165)" opacity=".3">
+    <circle r="88" fill="none" stroke="#1F52B0" stroke-width="1" stroke-dasharray="3 4"/>
+  </g>
+  <!-- sparkles -->
+  <g fill="#FFD84C">
+    <path d="M180 60 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+    <path d="M240 55 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+    <path d="M155 260 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+    <path d="M260 275 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+  </g>
+</svg>

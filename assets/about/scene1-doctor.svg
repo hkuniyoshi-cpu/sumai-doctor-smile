@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="s1sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0F6FF"/>
+      <stop offset="1" stop-color="#DBE9FF"/>
+    </linearGradient>
+    <linearGradient id="s1grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A6ECD8"/>
+      <stop offset="1" stop-color="#4CE0C1"/>
+    </linearGradient>
+    <linearGradient id="s1roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF7A0F"/>
+      <stop offset="1" stop-color="#FF4E70"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" fill="url(#s1sky)" rx="16"/>
+  <!-- clouds -->
+  <ellipse cx="70" cy="55" rx="30" ry="10" fill="#fff" opacity=".8"/>
+  <ellipse cx="55" cy="62" rx="18" ry="7" fill="#fff" opacity=".8"/>
+  <ellipse cx="340" cy="45" rx="26" ry="9" fill="#fff" opacity=".8"/>
+  <!-- sun -->
+  <circle cx="330" cy="70" r="18" fill="#FFD84C" opacity=".9"/>
+  <g stroke="#FFBD3A" stroke-width="2" stroke-linecap="round">
+    <line x1="330" y1="42" x2="330" y2="34"/>
+    <line x1="330" y1="98" x2="330" y2="106"/>
+    <line x1="302" y1="70" x2="294" y2="70"/>
+    <line x1="358" y1="70" x2="366" y2="70"/>
+    <line x1="310" y1="50" x2="304" y2="44"/>
+    <line x1="350" y1="90" x2="356" y2="96"/>
+  </g>
+  <!-- grass -->
+  <path d="M0 260 Q100 240 200 260 T400 260 L400 320 L0 320 Z" fill="url(#s1grass)"/>
+  <!-- house being cared for -->
+  <g transform="translate(140 130)">
+    <!-- body -->
+    <path d="M-60 40 L-60 130 L60 130 L60 40 L0 -5 Z" fill="#fff" stroke="#1F52B0" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M-64 45 L0 -8 L64 45" fill="url(#s1roof)" stroke="#1F52B0" stroke-width="3" stroke-linejoin="round"/>
+    <!-- door -->
+    <rect x="-14" y="80" width="28" height="50" fill="#FF7A0F" rx="1"/>
+    <circle cx="8" cy="105" r="2.5" fill="#FFD84C"/>
+    <!-- windows -->
+    <rect x="-48" y="55" width="26" height="24" fill="#DBE9FF" stroke="#1F52B0" stroke-width="2" rx="1"/>
+    <line x1="-35" y1="55" x2="-35" y2="79" stroke="#1F52B0" stroke-width="1.5"/>
+    <line x1="-48" y1="67" x2="-22" y2="67" stroke="#1F52B0" stroke-width="1.5"/>
+    <rect x="22" y="55" width="26" height="24" fill="#DBE9FF" stroke="#1F52B0" stroke-width="2" rx="1"/>
+    <line x1="35" y1="55" x2="35" y2="79" stroke="#1F52B0" stroke-width="1.5"/>
+    <line x1="22" y1="67" x2="48" y2="67" stroke="#1F52B0" stroke-width="1.5"/>
+    <!-- ハート on chimney (medical care symbol) -->
+    <g transform="translate(35 -20) scale(.5)">
+      <path d="M0 12 Q-14 0 -14 -8 A8 8 0 0 1 0 -10 A8 8 0 0 1 14 -8 Q14 0 0 12 Z" fill="#FF4E70"/>
+    </g>
+  </g>
+  <!-- doctor character (right of house) -->
+  <g transform="translate(280 200)">
+    <!-- coat -->
+    <path d="M-20 0 L20 0 L24 60 L-24 60 Z" fill="#fff" stroke="#1F52B0" stroke-width="2"/>
+    <!-- collar V -->
+    <path d="M-10 0 L0 12 L10 0" fill="none" stroke="#1F52B0" stroke-width="2"/>
+    <!-- stethoscope -->
+    <path d="M-8 8 Q-16 40 0 40 Q16 40 8 8" fill="none" stroke="#FF4E70" stroke-width="3"/>
+    <circle cx="0" cy="42" r="4" fill="#FF4E70"/>
+    <!-- head -->
+    <circle cx="0" cy="-16" r="14" fill="#FFCB99"/>
+    <!-- hair -->
+    <path d="M-13 -18 Q0 -34 13 -18 L13 -22 Q0 -30 -13 -22 Z" fill="#3A4A66"/>
+    <!-- eyes -->
+    <circle cx="-4" cy="-15" r="1.5" fill="#0F2560"/>
+    <circle cx="4" cy="-15" r="1.5" fill="#0F2560"/>
+    <!-- smile -->
+    <path d="M-4 -8 Q0 -5 4 -8" fill="none" stroke="#0F2560" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- badge -->
+    <rect x="8" y="10" width="10" height="8" fill="#FFBD3A" rx="1"/>
+    <text x="13" y="17" text-anchor="middle" font-size="6" fill="#0F2560" font-weight="bold">+</text>
+  </g>
+  <!-- sparkles -->
+  <g fill="#FFD84C">
+    <path d="M240 90 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+    <path d="M100 200 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+    <path d="M370 180 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+  </g>
+</svg>

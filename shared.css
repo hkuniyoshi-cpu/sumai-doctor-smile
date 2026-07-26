@@ -599,13 +599,13 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ヒーロー統計バー — アイコン+値+説明の3段構成 */
 .hero-stats-bar {
   position: relative;
-  z-index: 2;
+  z-index: 5;  /* 後続の .about (z-index:3) より前面に */
   display: flex;
   align-items: stretch;
   gap: 0;
-  padding: 22px 40px 26px;
+  padding: 26px 40px 80px;  /* 下80px：.about の -48px 覆いを考慮 */
   border-top: 1px solid rgba(255,189,58,.25);
-  background: linear-gradient(180deg, rgba(15,37,96,.35) 0%, rgba(15,37,96,.55) 100%);
+  background: linear-gradient(180deg, rgba(15,37,96,.35) 0%, rgba(15,37,96,.7) 100%);
   backdrop-filter: blur(8px);
 }
 .hero-stat {
@@ -962,6 +962,122 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   border-radius: 0 4px 4px 0;
 }
 
+/* ============================================================
+   About 絵本ページスタイル（4 Chapters）
+   ============================================================ */
+.about-book {
+  display: flex;
+  flex-direction: column;
+  gap: 68px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+.ab-scene {
+  display: grid;
+  grid-template-columns: minmax(280px, 44%) 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(255,255,255,.7), rgba(255,255,255,.4));
+  border-radius: 20px;
+  box-shadow:
+    0 10px 30px -18px rgba(15, 37, 96, .25),
+    inset 0 1px 0 rgba(255,255,255,.7);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out);
+}
+.ab-scene.ab-reverse { grid-template-columns: 1fr minmax(280px, 44%); }
+.ab-scene.ab-reverse .ab-illust { order: 2; }
+.ab-scene.ab-reverse .ab-text   { order: 1; }
+.ab-scene:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 45px -20px rgba(15, 37, 96, .35),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+.ab-scene::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 42px; height: 42px;
+  background: linear-gradient(225deg, transparent 48%, rgba(255,122,15,.35) 48%, rgba(255,189,58,.35) 100%);
+  border-radius: 0 20px 0 0;
+}
+.ab-scene.ab-reverse::before {
+  right: auto; left: 0;
+  background: linear-gradient(135deg, transparent 48%, rgba(52,200,255,.35) 48%, rgba(76,224,193,.35) 100%);
+  border-radius: 20px 0 0 0;
+}
+.ab-illust { position: relative; padding: 8px; }
+.ab-illust img {
+  width: 100%; height: auto;
+  display: block;
+  border-radius: 14px;
+  filter: drop-shadow(0 6px 22px rgba(31,82,176,.18));
+  transition: transform .5s var(--ease-out);
+  animation: illust-drift 6s ease-in-out infinite;
+}
+.ab-scene:hover .ab-illust img { transform: rotate(-1deg) scale(1.02); }
+.ab-scene:nth-child(2) .ab-illust img { animation-delay: -1.5s; }
+.ab-scene:nth-child(3) .ab-illust img { animation-delay: -3s; }
+.ab-scene:nth-child(4) .ab-illust img { animation-delay: -4.5s; }
+.ab-text { padding: 8px; }
+.ab-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  background: var(--grad-fire);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  border-radius: 999px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 10px rgba(255,122,15,.35);
+}
+.ab-headline {
+  font-family: var(--sans-jp);
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
+  letter-spacing: .04em;
+  margin-bottom: 16px;
+}
+.ab-headline em {
+  font-style: normal;
+  background: var(--grad-fire);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 0 2px;
+}
+.ab-text p {
+  font-size: 15px;
+  line-height: 1.95;
+  color: var(--ink-soft);
+  text-align: justify;
+  letter-spacing: .02em;
+}
+@media (max-width: 780px) {
+  .about-book { gap: 40px; }
+  .ab-scene, .ab-scene.ab-reverse {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 18px;
+  }
+  .ab-scene .ab-illust,
+  .ab-scene.ab-reverse .ab-illust { order: 0; }
+  .ab-scene .ab-text,
+  .ab-scene.ab-reverse .ab-text { order: 1; }
+  .ab-illust img { max-width: 340px; margin: 0 auto; }
+  .ab-headline { font-size: 20px; }
+  .ab-text p { font-size: 14px; line-height: 1.9; }
+}
+
 .about-photos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -990,9 +1106,16 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .menu-sec { background: var(--grad-sea); }
 
 .menu-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+}
+.menu-grid .menu-card,
+.menu-grid .menu-skel {
+  flex: 1 1 300px;
+  max-width: 360px;
+  min-width: 260px;
 }
 .menu-card {
   background: #fff;
@@ -1204,11 +1327,18 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .reviews-sec { background: var(--grad-sea); }
 
 .reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 1fr;
-  gap: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
   align-items: stretch;
+}
+.reviews-grid .review,
+.reviews-grid .review-skel,
+.reviews-grid .review-cta {
+  flex: 1 1 300px;
+  max-width: 360px;
+  min-width: 260px;
 }
 .review-skel {
   height: 280px;
@@ -1998,6 +2128,19 @@ a.blog-card { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 640px) {
+  /* ヘッダー見切れ対策：英語サブタイトル非表示＋日本語1行に圧縮 */
+  .nav-brand .en { display: none; }
+  .nav-brand-ja-txt {
+    font-size: 13px;
+    letter-spacing: .02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100vw - 240px);
+  }
+  .nav-brand-logo { width: 34px; height: 34px; }
+  .btn-nav { padding: 9px 14px; font-size: 11.5px; }
+
   .hero-h1 { font-size: clamp(40px, 12vw, 60px); }
   .hero-inner { padding-bottom: 40px; }
   .hero-stats-bar { display: none; }
@@ -2017,6 +2160,295 @@ a.blog-card { text-decoration: none; color: inherit; }
 
 @media (max-width: 400px) {
   .wall { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   派手アニメーション追加パック
+   ============================================================ */
+
+/* スクロール進捗バー（ページ最上部） */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FF4E70, #FF7A0F, #FFBD3A, #4CE0C1, #34C8FF);
+  background-size: 200% 100%;
+  z-index: 9998;
+  width: 0%;
+  transition: width .12s ease-out;
+  animation: progress-shift 4s linear infinite;
+  box-shadow: 0 0 12px rgba(255,122,15,.6);
+}
+@keyframes progress-shift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ヒーロー背景に浮遊バブル */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-particles::before,
+.hero-particles::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,189,58,.5), transparent 70%);
+  filter: blur(30px);
+}
+.hero-particles::before {
+  width: 260px; height: 260px;
+  top: -60px; left: 15%;
+  animation: float-orb-a 12s ease-in-out infinite;
+}
+.hero-particles::after {
+  width: 200px; height: 200px;
+  bottom: 120px; right: 22%;
+  background: radial-gradient(circle, rgba(76,224,193,.4), transparent 70%);
+  animation: float-orb-b 15s ease-in-out infinite;
+}
+@keyframes float-orb-a {
+  0%,100% { transform: translate(0, 0) scale(1); opacity: .8; }
+  33%     { transform: translate(60px, 40px) scale(1.15); opacity: 1; }
+  66%     { transform: translate(-30px, 80px) scale(.9); opacity: .6; }
+}
+@keyframes float-orb-b {
+  0%,100% { transform: translate(0, 0) scale(1); opacity: .7; }
+  50%     { transform: translate(-50px, -60px) scale(1.2); opacity: 1; }
+}
+
+/* ヒーロータイトルグロー */
+.hero-h1 {
+  text-shadow: 0 4px 30px rgba(255,189,58,.35);
+  animation: hero-title-glow 4s ease-in-out infinite;
+}
+@keyframes hero-title-glow {
+  0%,100% { text-shadow: 0 4px 30px rgba(255,189,58,.35); }
+  50%     { text-shadow: 0 4px 50px rgba(255,189,58,.6), 0 0 20px rgba(52,200,255,.3); }
+}
+
+/* サイドバーロゴ揺れ */
+.sb-brand-logo {
+  animation: logo-bob 3s ease-in-out infinite;
+}
+@keyframes logo-bob {
+  0%,100% { transform: translateY(0) rotate(0); }
+  25%     { transform: translateY(-2px) rotate(-3deg); }
+  75%     { transform: translateY(-2px) rotate(3deg); }
+}
+
+/* ナビロゴ ワッデル */
+.nav-brand-logo {
+  animation: logo-wobble 4s ease-in-out infinite;
+}
+@keyframes logo-wobble {
+  0%,100% { transform: rotate(0); }
+  15%     { transform: rotate(-6deg); }
+  30%     { transform: rotate(4deg); }
+  45%     { transform: rotate(-2deg); }
+  60%     { transform: rotate(0); }
+}
+
+/* メニューカード 3Dチルト＋グロー */
+.menu-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  position: relative;
+}
+.menu-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #FF6B5B, #FF7A0F, #FFBD3A, #4CE0C1, #34C8FF);
+  background-size: 400% 400%;
+  z-index: -1;
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity .45s;
+}
+.menu-card:hover {
+  transform: translateY(-10px) perspective(600px) rotateX(3deg);
+}
+.menu-card:hover::after {
+  opacity: .55;
+  animation: rainbow-glow 3s linear infinite;
+}
+@keyframes rainbow-glow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
+}
+
+/* イラスト画像 ゆらゆら */
+.menu-card-img.illust img {
+  animation: illust-drift 6s ease-in-out infinite;
+}
+.menu-card:nth-child(2) .menu-card-img.illust img { animation-delay: -1.5s; }
+.menu-card:nth-child(3) .menu-card-img.illust img { animation-delay: -3s; }
+.menu-card:nth-child(4) .menu-card-img.illust img { animation-delay: -4.5s; }
+@keyframes illust-drift {
+  0%,100% { transform: scale(1) translateY(0); }
+  50%     { transform: scale(1.03) translateY(-4px); }
+}
+
+/* バッジパルス */
+.menu-badge {
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+  0%,100% { transform: scale(1); box-shadow: 0 2px 8px rgba(255,122,15,.4); }
+  50%     { transform: scale(1.08); box-shadow: 0 4px 20px rgba(255,122,15,.7); }
+}
+
+/* Features 番号ズームイン + パルス */
+.feature-num {
+  transition: color .3s, transform .4s var(--ease-out);
+}
+.feature-item:hover .feature-num {
+  color: var(--accent) !important;
+  transform: scale(1.25) rotate(-5deg);
+}
+
+/* Featureタイトルの左バー成長 */
+.feature-title::before {
+  transition: height .4s var(--ease-out), background .3s;
+}
+.feature-item:hover .feature-title::before {
+  height: 24px;
+  background: linear-gradient(180deg, #FF4E70, #FFBD3A);
+  box-shadow: 0 0 12px rgba(255,122,15,.6);
+}
+
+/* For-you カード浮上 */
+.for-you-card {
+  transition: background .35s var(--ease-out), transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+}
+.for-you-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(255,189,58,.25);
+}
+.for-you-icon {
+  transition: transform .4s var(--ease-out);
+  display: inline-block;
+}
+.for-you-card:hover .for-you-icon {
+  transform: scale(1.3) rotate(15deg);
+}
+
+/* Review star sparkle */
+.review .stars {
+  animation: stars-shimmer 3s ease-in-out infinite;
+}
+@keyframes stars-shimmer {
+  0%,100% { text-shadow: 0 0 0 currentColor; }
+  50%     { text-shadow: 0 0 12px rgba(245,158,11,.7); }
+}
+
+/* Blog card テープ揺らぎ */
+.tape {
+  animation: tape-sway 4s ease-in-out infinite;
+  transform-origin: center;
+}
+@keyframes tape-sway {
+  0%,100% { transform: rotate(0); }
+  50%     { transform: rotate(3deg); }
+}
+.blog-card:hover .tape {
+  animation-duration: .6s;
+}
+
+/* CTA 呼吸パルス */
+.cta {
+  animation: cta-breathe 6s ease-in-out infinite;
+}
+@keyframes cta-breathe {
+  0%,100% { filter: brightness(1) saturate(1); }
+  50%     { filter: brightness(1.05) saturate(1.15); }
+}
+
+/* CTA ボタン バウンス */
+.btn-cta-primary {
+  animation: cta-btn-bounce 2.4s ease-in-out infinite;
+}
+@keyframes cta-btn-bounce {
+  0%,100% { transform: translateY(0); }
+  40%     { transform: translateY(-6px); }
+  60%     { transform: translateY(0); }
+  70%     { transform: translateY(-3px); }
+  80%     { transform: translateY(0); }
+}
+.btn-cta-primary:hover { animation-play-state: paused; }
+
+/* FAQ 開閉時のプラス回転強化 */
+.faq-q::after { transition: transform .5s cubic-bezier(.68,-.55,.27,1.55), color .3s; }
+.faq-item.open .faq-q::after {
+  transform: rotate(135deg) scale(1.2);
+  color: #FF4E70;
+}
+
+/* リンク下線描画（フッター） */
+.footer-links a { position: relative; }
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width .3s var(--ease-out);
+}
+.footer-links a:hover::after { width: 100%; }
+
+/* セクションタイトル: フェードスライド */
+.section-title {
+  background: linear-gradient(90deg, currentColor 0%, currentColor 50%, rgba(255,122,15,.7) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  transition: background-position 1.2s ease;
+}
+.reveal.visible .section-title {
+  background-position: 100% 50%;
+}
+
+/* エアウェーブ line-draw を虹色に */
+.line-draw::after {
+  background: linear-gradient(90deg, #FF4E70, #FF7A0F, #FFBD3A);
+  background-size: 200% 100%;
+  animation: line-shift 3s linear infinite;
+}
+@keyframes line-shift {
+  0%   { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* リビール強化：blur-in / rise / rotate-in / scale-in */
+.reveal-blur { opacity: 0; filter: blur(14px); transform: translateY(24px);
+  transition: opacity .9s var(--ease-out), filter .9s var(--ease-out), transform .9s var(--ease-out); }
+.reveal-blur.visible { opacity: 1; filter: blur(0); transform: none; }
+
+.reveal-rotate { opacity: 0; transform: rotate(-4deg) translateY(30px);
+  transition: opacity .9s var(--ease-out), transform 1s var(--ease-out); }
+.reveal-rotate.visible { opacity: 1; transform: none; }
+
+.reveal-scale { opacity: 0; transform: scale(.85);
+  transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+/* Number countUp 時に強調 */
+.count-num {
+  display: inline-block;
+  transition: transform .5s;
+}
+.count-num.counting { transform: scale(1.15); }
+
+/* motion-reduced 対応 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001s !important; transition-duration: .01s !important; }
 }
 
 /* ============================================================

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="s2sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFCB99"/>
+      <stop offset=".5" stop-color="#FFA967"/>
+      <stop offset="1" stop-color="#FF7A0F"/>
+    </linearGradient>
+    <linearGradient id="s2sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#34C8FF"/>
+      <stop offset="1" stop-color="#1F52B0"/>
+    </linearGradient>
+    <radialGradient id="s2sun" cx=".5" cy=".5">
+      <stop offset="0" stop-color="#FFF3D6"/>
+      <stop offset="1" stop-color="#FFD84C"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="320" fill="url(#s2sky)" rx="16"/>
+  <!-- Tropical sun -->
+  <circle cx="200" cy="90" r="45" fill="url(#s2sun)" opacity=".95"/>
+  <g stroke="#FFD84C" stroke-width="3" stroke-linecap="round" opacity=".8">
+    <line x1="200" y1="30" x2="200" y2="18"/>
+    <line x1="200" y1="150" x2="200" y2="162"/>
+    <line x1="140" y1="90" x2="128" y2="90"/>
+    <line x1="260" y1="90" x2="272" y2="90"/>
+    <line x1="160" y1="50" x2="152" y2="42"/>
+    <line x1="240" y1="130" x2="248" y2="138"/>
+    <line x1="160" y1="130" x2="152" y2="138"/>
+    <line x1="240" y1="50" x2="248" y2="42"/>
+  </g>
+  <!-- ocean waves (bottom) -->
+  <path d="M0 220 Q100 200 200 220 T400 220 L400 320 L0 320 Z" fill="url(#s2sea)" opacity=".85"/>
+  <!-- salt spray droplets flying at house -->
+  <g fill="#fff" opacity=".9">
+    <path d="M60 200 q-3 6 0 10 q3-4 0-10"/>
+    <path d="M90 210 q-3 6 0 10 q3-4 0-10"/>
+    <path d="M340 210 q-3 6 0 10 q3-4 0-10"/>
+    <path d="M370 205 q-3 6 0 10 q3-4 0-10"/>
+    <path d="M320 195 q-3 6 0 10 q3-4 0-10"/>
+  </g>
+  <!-- typhoon spiral -->
+  <g transform="translate(80 80)" opacity=".55">
+    <path d="M0 0 Q -30 -10 -25 10 Q -10 25 5 15 Q 18 5 8 -5 Q -5 -12 -8 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(320 70)" opacity=".5">
+    <path d="M0 0 Q -20 -6 -18 8 Q -8 18 4 10 Q 12 3 5 -3 Q -4 -8 -5 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <!-- house (strong, protected) -->
+  <g transform="translate(200 210)">
+    <path d="M-55 -10 L-55 65 L55 65 L55 -10 L0 -50 Z" fill="#fff" stroke="#0F2560" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M-58 -8 L0 -52 L58 -8" fill="#1F52B0" stroke="#0F2560" stroke-width="3" stroke-linejoin="round"/>
+    <!-- shield on wall -->
+    <path d="M-16 -2 L16 -2 L16 30 Q0 45 -16 30 Z" fill="#4CE0C1" stroke="#0F2560" stroke-width="2"/>
+    <path d="M-8 15 L-2 22 L10 8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- door -->
+    <rect x="-12" y="40" width="24" height="25" fill="#FF7A0F"/>
+    <!-- windows -->
+    <rect x="-45" y="10" width="20" height="18" fill="#DBE9FF" stroke="#0F2560" stroke-width="1.5"/>
+    <rect x="25" y="10" width="20" height="18" fill="#DBE9FF" stroke="#0F2560" stroke-width="1.5"/>
+  </g>
+  <!-- palm tree bending in wind (left) -->
+  <g transform="translate(50 240)">
+    <path d="M0 0 Q -5 -30 -15 -60" fill="none" stroke="#8B5A2B" stroke-width="4"/>
+    <g transform="translate(-15 -60)">
+      <path d="M0 0 Q -30 -8 -40 -20 Q -20 -5 0 0" fill="#4CE0C1"/>
+      <path d="M0 0 Q -20 -25 -20 -40 Q -5 -20 0 0" fill="#4CE0C1"/>
+      <path d="M0 0 Q 15 -10 30 -8 Q 15 5 0 0" fill="#4CE0C1"/>
+      <path d="M0 0 Q 20 -20 30 -30 Q 15 -8 0 0" fill="#4CE0C1"/>
+    </g>
+  </g>
+  <!-- flying drop (accent) -->
+  <g fill="#22B8FF">
+    <path d="M120 130 q-4 8 0 14 q4-6 0-14"/>
+    <path d="M280 140 q-4 8 0 14 q4-6 0-14"/>
+  </g>
+</svg>
