@@ -180,20 +180,37 @@ function driveImg(url) {
   return s;
 }
 
-function getSlug() {
+function getSlugAndIndex() {
   const params = new URLSearchParams(location.search);
-  if (params.get('post')) return params.get('post');
-  const m = location.pathname.match(/\/blog\/([^\/]+)\/?$/);
-  return m ? m[1] : '';
+  var slug = params.get('post') || '';
+  var nRaw = params.get('n');
+  var n = (nRaw != null && /^\d+$/.test(nRaw)) ? parseInt(nRaw, 10) : null;
+  if (!slug) {
+    const m = location.pathname.match(/\/blog\/([^\/]+)\/?$/);
+    slug = m ? m[1] : '';
+  }
+  return { slug: slug, n: n };
 }
 
-function findBySlug(items, slug) {
+function findBySlug(items, slug, n) {
   if (!Array.isArray(items) || !slug) return null;
-  return items.find(function(b) {
+  // 1. n パラメータが有効なら配列インデックスで直接返す（最優先）
+  if (n != null && n >= 0 && n < items.length) return items[n];
+  // 2. URL に /blog/SLUG が含まれる記事を返す
+  var byUrl = items.find(function(b) {
     if (!b || !b.url) return false;
     return b.url.indexOf('/blog/' + slug + '/') !== -1
         || b.url.indexOf('/blog/' + slug) !== -1;
-  }) || null;
+  });
+  if (byUrl) return byUrl;
+  // 3. URL がスラッグで始まる（Sheets F列にスラッグだけ入っているケース）
+  var bySlugStart = items.find(function(b) {
+    if (!b || !b.url) return false;
+    return b.url === slug || b.url === (slug + '/') || b.url.indexOf(slug + '-') === 0 || b.url.indexOf(slug + '/') === 0;
+  });
+  if (bySlugStart) return bySlugStart;
+  // 4. 日付完全一致（旧URL・日付だけ指定のケース）
+  return items.find(function(b) { return b && b.date === slug; }) || null;
 }
 
 function updateMeta(title, desc, imgUrl) {
@@ -289,7 +306,9 @@ function render(item) {
 }
 
 (function init() {
-  const slug = getSlug();
+  const ctx = getSlugAndIndex();
+  const slug = ctx.slug;
+  const n = ctx.n;
   if (!slug) {
     render(null);
     return;
@@ -298,7 +317,7 @@ function render(item) {
   fetch(GAS_URL + (GAS_URL.indexOf('?') >= 0 ? '&' : '?') + 'blog_all=1')
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      const item = findBySlug(data && data.blog, slug);
+      const item = findBySlug(data && data.blog, slug, n);
       render(item);
     })
     .catch(function(err) {
@@ -306,7 +325,7 @@ function render(item) {
       fetch(GAS_URL)
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          const item = findBySlug(data && data.blog, slug);
+          const item = findBySlug(data && data.blog, slug, n);
           render(item);
         })
         .catch(function() { render(null); });

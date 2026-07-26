@@ -8,30 +8,40 @@
    変数
    ============================================================ */
 :root {
-  --bg:           #FDFBF7;
-  --bg-2:         #FFF6EC;
-  --bg-3:         #EEF4FF;
-  --ink:          #112040;
-  --ink-soft:     #4A5568;
-  --accent:       #FF8419;
-  --accent-2:     #FFB84D;
-  --accent-faded: rgba(255,132,25,.14);
-  --navy:         #1E4488;
-  --navy-dark:    #0F1F42;
-  --navy-2:       #2E5FB4;
-  --sky:          #4EA0EF;
+  --bg:           #FEFCF7;
+  --bg-2:         #FFEDD5;
+  --bg-3:         #DBE9FF;
+  --ink:          #0F1E3F;
+  --ink-soft:     #3A4A66;
+  --accent:       #FF7A0F;
+  --accent-2:     #FFBD3A;
+  --accent-3:     #FF4E70;
+  --accent-faded: rgba(255,122,15,.16);
+  --navy:         #1F52B0;
+  --navy-dark:    #0F2560;
+  --navy-2:       #3670D0;
+  --sky:          #34C8FF;
+  --sky-2:        #22B8FF;
+  --mint:         #4CE0C1;
+  --coral:        #FF6B5B;
+  --lemon:        #FFD84C;
   --muted:        #8896A8;
   --cream:        #FFF9F0;
-  --line:         rgba(30,68,136,.12);
-  --header-bg:    linear-gradient(135deg, #0F1F42 0%, #1E4488 100%);
+  --line:         rgba(31,82,176,.14);
+  --header-bg:    linear-gradient(135deg, #0F2560 0%, #1F52B0 100%);
 
-  /* グラデーション（明るく・鮮やか） */
-  --grad-hero:    linear-gradient(135deg, #0F1F42 0%, #1E4488 45%, #2E5FB4 100%);
-  --grad-warm:    linear-gradient(135deg, #FFF6EC 0%, #FFFBF3 100%);
-  --grad-cool:    linear-gradient(135deg, #EEF4FF 0%, #F7FAFF 100%);
-  --grad-accent:  linear-gradient(135deg, #FF8419 0%, #FFB84D 100%);
-  --grad-navy-warm: linear-gradient(135deg, #1E4488 0%, #2E5FB4 50%, #FF8419 130%);
-  --grad-sidebar: linear-gradient(180deg, #0F1F42 0%, #1E4488 100%);
+  /* グラデーション（ビビッド版・複数色ステップ） */
+  --grad-hero:    linear-gradient(135deg, #0F2560 0%, #1F52B0 35%, #3670D0 70%, #FF7A0F 130%);
+  --grad-warm:    linear-gradient(135deg, #FFF0DC 0%, #FFE0BE 50%, #FFCB99 100%);
+  --grad-cool:    linear-gradient(135deg, #E1EDFF 0%, #C7DFFF 50%, #A9CFFF 100%);
+  --grad-sunrise: linear-gradient(120deg, #FFEDD5 0%, #FFCB99 40%, #FFA967 100%);
+  --grad-sea:     linear-gradient(120deg, #DBE9FF 0%, #B7D6FF 40%, #7FB6FF 100%);
+  --grad-accent:  linear-gradient(135deg, #FF6B0F 0%, #FF9A2E 50%, #FFCE55 100%);
+  --grad-fire:    linear-gradient(135deg, #FF4E70 0%, #FF7A0F 55%, #FFBD3A 100%);
+  --grad-ocean:   linear-gradient(135deg, #0F2560 0%, #1F52B0 40%, #34C8FF 100%);
+  --grad-sunset:  linear-gradient(120deg, #1F52B0 0%, #6E58C9 40%, #FF4E70 75%, #FFBD3A 100%);
+  --grad-navy-warm: linear-gradient(135deg, #0F2560 0%, #1F52B0 40%, #FF7A0F 130%);
+  --grad-sidebar: linear-gradient(180deg, #0F2560 0%, #1F52B0 65%, #FF4E70 130%);
 
   --sans:         'Outfit', sans-serif;
   --sans-jp:      'Noto Sans JP', sans-serif;
@@ -824,7 +834,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    ABOUT
    ============================================================ */
-.about { background: var(--grad-warm); }
+.about { background: var(--grad-sunrise); }
 
 .about-paras p {
   color: var(--ink-soft);
@@ -871,7 +881,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    MENU / SERVICE
    ============================================================ */
-.menu-sec { background: var(--grad-cool); }
+.menu-sec { background: var(--grad-sea); }
 
 .menu-grid {
   display: grid;
@@ -961,7 +971,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    FEATURES
    ============================================================ */
-.features { background: var(--grad-warm); }
+.features { background: var(--grad-sunrise); }
 
 .features-list {
   display: grid;
@@ -1019,7 +1029,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    FOR YOU
    ============================================================ */
-.for-you { background: linear-gradient(135deg, #0F1F42 0%, #1E4488 60%, #2E5FB4 100%); }
+.for-you { background: var(--grad-ocean); }
 .for-you .section-title { color: #fff; }
 .for-you .eyebrow { color: var(--accent); }
 
@@ -1063,7 +1073,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    REVIEWS
    ============================================================ */
-.reviews-sec { background: var(--grad-cool); }
+.reviews-sec { background: var(--grad-sea); }
 
 .reviews-grid {
   display: grid;
@@ -1171,7 +1181,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ============================================================
    BLOG
    ============================================================ */
-#blog { background: var(--grad-warm); }
+#blog { background: var(--grad-sunrise); }
 
 .wall {
   display: grid;
@@ -1265,7 +1275,7 @@ a.blog-card { text-decoration: none; color: inherit; }
 /* ============================================================
    ACCESS
    ============================================================ */
-.access-sec { background: var(--grad-cool); }
+.access-sec { background: var(--grad-sea); }
 
 .access-grid {
   display: grid;
@@ -1341,7 +1351,7 @@ a.blog-card { text-decoration: none; color: inherit; }
 /* ============================================================
    SNS
    ============================================================ */
-.sns-sec { background: var(--grad-warm); }
+.sns-sec { background: var(--grad-sunrise); }
 
 .sns-grid {
   display: grid;
@@ -1403,7 +1413,7 @@ a.blog-card { text-decoration: none; color: inherit; }
 /* ============================================================
    ESTIMATE / DELIVERY
    ============================================================ */
-.estimate-sec { background: linear-gradient(135deg, #0F1F42 0%, #1E4488 55%, #FF8419 220%); }
+.estimate-sec { background: var(--grad-sunset); }
 .estimate-sec .section-title,
 .estimate-sec .eyebrow,
 .estimate-sec .section-subtitle { color: rgba(255,255,255,.9); }
@@ -1471,7 +1481,7 @@ a.blog-card { text-decoration: none; color: inherit; }
 /* ============================================================
    FAQ
    ============================================================ */
-.faq-sec { background: var(--grad-cool); }
+.faq-sec { background: var(--grad-sea); }
 
 .faq-list { }
 .faq-item {
@@ -1521,7 +1531,7 @@ a.blog-card { text-decoration: none; color: inherit; }
    CTA
    ============================================================ */
 .cta {
-  background: linear-gradient(135deg, #0F1F42 0%, #1E4488 40%, #FF8419 130%);
+  background: var(--grad-sunset);
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -1530,10 +1540,20 @@ a.blog-card { text-decoration: none; color: inherit; }
   content: '';
   position: absolute;
   right: -100px; top: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,216,76,.55), rgba(255,105,90,.2) 45%, transparent 70%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+.cta::before {
+  content: '';
+  position: absolute;
+  left: -120px; bottom: -120px;
   width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(255,184,77,.35), transparent 65%);
+  background: radial-gradient(circle, rgba(52,200,255,.4), transparent 60%);
   filter: blur(40px);
   pointer-events: none;
+  z-index: 0;
 }
 .cta-box {
   padding: 100px 0;
@@ -1619,9 +1639,10 @@ a.blog-card { text-decoration: none; color: inherit; }
    FOOTER
    ============================================================ */
 .footer {
-  background: linear-gradient(180deg, #0F1F42 0%, #1E4488 100%);
+  background: linear-gradient(180deg, #0F2560 0%, #1F52B0 100%);
   padding: 72px 0 0;
-  border-top: 1px solid rgba(255,132,25,.25);
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, #FF4E70 0%, #FF7A0F 50%, #FFBD3A 100%) 1;
 }
 .footer-inner {
   display: grid;
