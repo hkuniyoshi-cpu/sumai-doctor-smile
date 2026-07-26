@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="skyRF" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF0DC"/>
+      <stop offset="1" stop-color="#FFCB99"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#skyRF)"/>
+  <!-- floor -->
+  <rect x="0" y="160" width="320" height="40" fill="#FFA967" opacity=".6"/>
+  <!-- house outline -->
+  <g transform="translate(150 20)">
+    <path d="M-70 60 L-70 140 L70 140 L70 60 L0 15 Z" fill="#fff" stroke="#1F52B0" stroke-width="3" stroke-linejoin="round"/>
+    <!-- door -->
+    <rect x="-15" y="90" width="30" height="50" fill="#FF7A0F" rx="1"/>
+    <circle cx="8" cy="115" r="2" fill="#FFD84C"/>
+    <!-- windows -->
+    <rect x="-55" y="75" width="26" height="26" fill="#DBE9FF" stroke="#1F52B0" stroke-width="2" rx="1"/>
+    <line x1="-42" y1="75" x2="-42" y2="101" stroke="#1F52B0" stroke-width="1.5"/>
+    <line x1="-55" y1="88" x2="-29" y2="88" stroke="#1F52B0" stroke-width="1.5"/>
+    <rect x="29" y="75" width="26" height="26" fill="#DBE9FF" stroke="#1F52B0" stroke-width="2" rx="1"/>
+    <line x1="42" y1="75" x2="42" y2="101" stroke="#1F52B0" stroke-width="1.5"/>
+    <line x1="29" y1="88" x2="55" y2="88" stroke="#1F52B0" stroke-width="1.5"/>
+    <!-- chimney -->
+    <rect x="35" y="20" width="14" height="20" fill="#FF4E70"/>
+    <!-- smoke -->
+    <circle cx="42" cy="15" r="4" fill="#fff" opacity=".7"/>
+    <circle cx="48" cy="8" r="3" fill="#fff" opacity=".7"/>
+    <circle cx="52" cy="2" r="2" fill="#fff" opacity=".7"/>
+  </g>
+  <!-- wrench (left) -->
+  <g transform="translate(45 100) rotate(-30)">
+    <rect x="-6" y="0" width="12" height="55" rx="3" fill="#3A4A66"/>
+    <path d="M-14 -12 A18 18 0 0 1 14 -12 L14 -4 L4 -4 L4 6 L-4 6 L-4 -4 L-14 -4 Z" fill="#3A4A66"/>
+    <circle cx="0" cy="-8" r="6" fill="url(#skyRF)"/>
+  </g>
+  <!-- screwdriver / hammer (right) -->
+  <g transform="translate(270 90) rotate(25)">
+    <rect x="-4" y="0" width="8" height="50" fill="#FFBD3A" rx="2"/>
+    <rect x="-14" y="-14" width="28" height="18" fill="#3A4A66" rx="2"/>
+    <rect x="10" y="-8" width="6" height="6" fill="#3A4A66"/>
+  </g>
+  <!-- gear accent -->
+  <g transform="translate(30 45)" fill="#FF4E70">
+    <circle r="14"/>
+    <g>
+      <rect x="-3" y="-19" width="6" height="8"/>
+      <rect x="-3" y="11" width="6" height="8"/>
+      <rect x="-19" y="-3" width="8" height="6"/>
+      <rect x="11" y="-3" width="8" height="6"/>
+      <rect x="-15" y="-15" width="6" height="6" transform="rotate(45 -12 -12)"/>
+      <rect x="9" y="-15" width="6" height="6" transform="rotate(-45 12 -12)"/>
+      <rect x="-15" y="9" width="6" height="6" transform="rotate(-45 -12 12)"/>
+      <rect x="9" y="9" width="6" height="6" transform="rotate(45 12 12)"/>
+    </g>
+    <circle r="5" fill="#FFD84C"/>
+  </g>
+  <!-- sparkles -->
+  <g fill="#FFD84C">
+    <path d="M290 30 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+    <path d="M100 50 l2 4 l4 1 l-3 3 l1 4 l-3-2 l-3 2 l1-4 l-3-3 l4-1 z"/>
+  </g>
+</svg>

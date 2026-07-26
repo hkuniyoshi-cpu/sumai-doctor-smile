@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="skyR" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#B7D6FF"/>
+      <stop offset="1" stop-color="#7FB6FF"/>
+    </linearGradient>
+    <linearGradient id="roofR" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3670D0"/>
+      <stop offset="1" stop-color="#0F2560"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#skyR)"/>
+  <!-- clouds -->
+  <ellipse cx="260" cy="30" rx="34" ry="10" fill="#fff" opacity=".8"/>
+  <ellipse cx="245" cy="38" rx="20" ry="8" fill="#fff" opacity=".8"/>
+  <!-- rain drops (repelled) -->
+  <g fill="#22B8FF" opacity=".8">
+    <path d="M40 25 q-3 6 0 10 q3-4 0-10"/>
+    <path d="M75 15 q-3 6 0 10 q3-4 0-10"/>
+    <path d="M110 30 q-3 6 0 10 q3-4 0-10"/>
+    <path d="M195 20 q-3 6 0 10 q3-4 0-10"/>
+    <path d="M220 40 q-3 6 0 10 q3-4 0-10"/>
+    <path d="M155 12 q-3 6 0 10 q3-4 0-10"/>
+  </g>
+  <!-- big roof structure -->
+  <path d="M20 130 L160 40 L300 130 L300 175 L20 175 Z" fill="url(#roofR)"/>
+  <!-- roof tiles (rows) -->
+  <g stroke="#0F2560" stroke-width="1.2" opacity=".55" fill="none">
+    <path d="M30 130 L155 45 L290 130"/>
+    <path d="M55 115 L155 50 L262 115"/>
+    <path d="M80 100 L155 55 L235 100"/>
+    <path d="M105 85 L155 60 L210 85"/>
+  </g>
+  <!-- individual tile marks -->
+  <g stroke="#0F2560" stroke-width="1" opacity=".45">
+    <line x1="90" y1="130" x2="90" y2="175"/>
+    <line x1="130" y1="130" x2="130" y2="175"/>
+    <line x1="170" y1="130" x2="170" y2="175"/>
+    <line x1="210" y1="130" x2="210" y2="175"/>
+    <line x1="250" y1="130" x2="250" y2="175"/>
+  </g>
+  <!-- water shield (droplet with checkmark) -->
+  <g transform="translate(220 55)">
+    <path d="M0 0 C 25 30 25 45 0 55 C -25 45 -25 30 0 0 Z" fill="#4CE0C1"/>
+    <path d="M-8 30 L-2 38 L10 22" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- worker tool: hammer on roof -->
+  <g transform="translate(75 75) rotate(-25)">
+    <rect x="0" y="0" width="6" height="36" fill="#FFBD3A" rx="1"/>
+    <rect x="-8" y="-6" width="22" height="12" fill="#FF7A0F" rx="2"/>
+  </g>
+  <!-- accent stars -->
+  <path d="M280 90 l3 6 l6 1 l-4.5 4 l1 6 l-5.5-3 l-5.5 3 l1-6 l-4.5-4 l6-1 z" fill="#FFD84C" opacity=".9"/>
+</svg>

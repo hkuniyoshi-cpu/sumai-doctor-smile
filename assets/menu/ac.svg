@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E1EDFF"/>
+      <stop offset="1" stop-color="#C7DFFF"/>
+    </linearGradient>
+    <linearGradient id="acBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E1EDFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#skyA)"/>
+  <!-- wall -->
+  <rect x="0" y="0" width="320" height="150" fill="#FFF0DC" opacity=".6"/>
+  <!-- ceiling line -->
+  <line x1="0" y1="30" x2="320" y2="30" stroke="#FFA967" stroke-width="1.5" opacity=".5"/>
+  <!-- AC unit -->
+  <g transform="translate(90 50)">
+    <rect x="0" y="0" width="160" height="45" fill="url(#acBody)" rx="6" stroke="#1F52B0" stroke-width="2"/>
+    <!-- louver -->
+    <rect x="12" y="35" width="136" height="6" fill="#DBE9FF" stroke="#1F52B0" stroke-width="1" rx="2"/>
+    <!-- display -->
+    <rect x="120" y="8" width="30" height="10" fill="#0F2560" rx="2"/>
+    <circle cx="127" cy="13" r="1.5" fill="#4CE0C1"/>
+    <circle cx="135" cy="13" r="1.5" fill="#FFD84C"/>
+    <text x="142" y="16" font-family="Arial" font-size="6" font-weight="bold" fill="#fff">ON</text>
+    <!-- brand strip -->
+    <rect x="12" y="8" width="90" height="14" fill="#EEF4FF" rx="1"/>
+    <line x1="12" y1="15" x2="102" y2="15" stroke="#1F52B0" stroke-width="0.5" opacity=".4"/>
+  </g>
+  <!-- cool air streams -->
+  <g stroke="#22B8FF" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8">
+    <path d="M110 110 q10 10 0 20 q-10 10 0 20"/>
+    <path d="M140 115 q10 10 0 20 q-10 10 0 20"/>
+    <path d="M170 110 q10 10 0 20 q-10 10 0 20"/>
+    <path d="M200 115 q10 10 0 20 q-10 10 0 20"/>
+    <path d="M230 110 q10 10 0 20 q-10 10 0 20"/>
+  </g>
+  <!-- snowflakes -->
+  <g fill="#4CE0C1">
+    <g transform="translate(60 110)">
+      <path d="M0 -10 L0 10 M -10 0 L 10 0 M -7 -7 L 7 7 M -7 7 L 7 -7" stroke="#4CE0C1" stroke-width="2"/>
+    </g>
+    <g transform="translate(275 130) scale(.7)">
+      <path d="M0 -10 L0 10 M -10 0 L 10 0 M -7 -7 L 7 7 M -7 7 L 7 -7" stroke="#4CE0C1" stroke-width="2"/>
+    </g>
+    <g transform="translate(45 165) scale(.6)">
+      <path d="M0 -10 L0 10 M -10 0 L 10 0 M -7 -7 L 7 7 M -7 7 L 7 -7" stroke="#4CE0C1" stroke-width="2"/>
+    </g>
+  </g>
+  <!-- sparkles -->
+  <g fill="#FFD84C">
+    <path d="M40 60 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+    <path d="M285 70 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+    <path d="M15 45 l2 5 l5 1 l-4 3 l1 5 l-4-2 l-4 2 l1-5 l-4-3 l5-1 z"/>
+  </g>
+  <!-- bubble accent -->
+  <g fill="#22B8FF" opacity=".55">
+    <circle cx="270" cy="170" r="7"/>
+    <circle cx="255" cy="180" r="4"/>
+    <circle cx="285" cy="185" r="5"/>
+  </g>
+</svg>

@@ -743,15 +743,32 @@ function applyAbout(a) {
   }
 }
 
+/* サービス名からデフォルトイラストを推測 */
+function menuIllustration(name) {
+  var n = String(name || '');
+  if (n.indexOf('外壁') !== -1)                          return '/assets/menu/exterior.svg';
+  if (n.indexOf('屋根') !== -1 || n.indexOf('防水') !== -1) return '/assets/menu/roof.svg';
+  if (n.indexOf('ロープ') !== -1)                        return '/assets/menu/rope.svg';
+  if (n.indexOf('エアコン') !== -1)                      return '/assets/menu/ac.svg';
+  if (n.indexOf('リフォーム') !== -1 || n.indexOf('解体') !== -1 || n.indexOf('その他') !== -1) return '/assets/menu/reform.svg';
+  return '';
+}
+
 function applyMenu(items) {
   var grid = document.getElementById('menuGrid');
   if (!grid || !Array.isArray(items) || !items.length) return;
   grid.innerHTML = items.map(function(m) {
     var img = driveImg(m.image || m.img || '');
-    return '<div class="menu-card reveal">' +
-      (img
-        ? '<div class="menu-card-img" style="background-image:url(\'' + img + '\')"></div>'
-        : '<div class="menu-card-img no-img"></div>') +
+    var illust = img ? '' : menuIllustration(m.name || m.title || '');
+    var imgHtml;
+    if (img) {
+      imgHtml = '<div class="menu-card-img" style="background-image:url(\'' + img + '\')"></div>';
+    } else if (illust) {
+      imgHtml = '<div class="menu-card-img illust"><img src="' + illust + '" alt="" decoding="async"/></div>';
+    } else {
+      imgHtml = '<div class="menu-card-img no-img"></div>';
+    }
+    return '<div class="menu-card reveal">' + imgHtml +
       '<div class="menu-card-body">' +
         (m.badge ? '<span class="menu-badge">' + esc(m.badge) + '</span>' : '') +
         '<p class="menu-card-name">' + esc(m.name || m.title || '') + '</p>' +
