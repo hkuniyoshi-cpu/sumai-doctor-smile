@@ -963,7 +963,265 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 }
 
 /* ============================================================
-   About 絵本ページスタイル（4 Chapters）
+   About 3Dフリップブック（絵本めくりアニメーション）
+   ============================================================ */
+.pb-book {
+  position: relative;
+  max-width: 960px;
+  margin: 32px auto 24px;
+  perspective: 2200px;
+  perspective-origin: 50% 40%;
+}
+.pb-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  min-height: 420px;
+  transform-style: preserve-3d;
+}
+/* 本の背景（革の表紙のイメージ） */
+.pb-stage::before {
+  content: '';
+  position: absolute;
+  inset: -14px -14px -14px -14px;
+  background: linear-gradient(135deg, #0F2560 0%, #1F52B0 60%, #FF6B5B 130%);
+  border-radius: 12px;
+  box-shadow:
+    0 24px 60px -20px rgba(15,37,96,.55),
+    inset 0 0 0 1px rgba(255,255,255,.1);
+  z-index: 0;
+}
+.pb-page {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FFF9F0 0%, #FFF2DE 100%);
+  /* 初期は非表示（JSで opacity/translate/scale をインライン設定して動かす） */
+  opacity: 0;
+  transition:
+    translate .85s cubic-bezier(.65,.03,.28,1),
+    scale .85s cubic-bezier(.65,.03,.28,1),
+    opacity .55s ease,
+    box-shadow .8s ease;
+  box-shadow: 0 10px 30px -12px rgba(15,37,96,.35);
+  overflow: hidden;
+  will-change: opacity;
+}
+/* ページ紙質（かすかな縦目線） */
+.pb-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(15,37,96,.14) 0%, transparent 6%),
+    repeating-linear-gradient(90deg, transparent 0 30px, rgba(15,37,96,.02) 30px 31px);
+  pointer-events: none;
+  z-index: 1;
+}
+/* ページめくり中の裏面カバー */
+.pb-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #FFF2DE, #FFE6C7);
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  border-radius: 8px;
+}
+.pb-page.turned {
+  transform: rotateY(-178deg);
+  box-shadow: 0 10px 20px -14px rgba(15,37,96,.3);
+}
+.pb-page.turning {
+  z-index: 20;
+}
+.pb-page.current { z-index: 15; }
+.pb-page:not(.turned):not(.current) {
+  z-index: calc(10 - var(--i, 0));
+}
+.pb-page[data-idx="1"] { --i: 1; }
+.pb-page[data-idx="2"] { --i: 2; }
+.pb-page[data-idx="3"] { --i: 3; }
+.pb-page[data-idx="4"] { --i: 4; }
+
+/* 見開き内容 */
+.pb-inner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  z-index: 2;
+}
+.pb-side {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.pb-illust {
+  background: linear-gradient(180deg, #F0F6FF, #DBE9FF);
+  border-right: 1px dashed rgba(31,82,176,.2);
+  align-items: center;
+  padding: 22px;
+}
+.pb-illust img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(15,37,96,.15));
+  animation: illust-drift 6s ease-in-out infinite;
+}
+.pb-text {
+  background: linear-gradient(180deg, #FFF9F0, #FFF2DE);
+}
+.pb-text .ab-badge {
+  align-self: flex-start;
+  margin-bottom: 12px;
+}
+.pb-text .ab-headline {
+  font-family: var(--sans-jp);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.pb-text .ab-headline em {
+  font-style: normal;
+  background: var(--grad-fire);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.pb-text p {
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  letter-spacing: .02em;
+  text-align: justify;
+  overflow-y: auto;
+  max-height: 100%;
+}
+.pb-text p::-webkit-scrollbar { width: 4px; }
+.pb-text p::-webkit-scrollbar-thumb { background: rgba(255,122,15,.4); border-radius: 2px; }
+
+/* 中央綴じ影 */
+.pb-spine {
+  position: absolute;
+  top: 4px; bottom: 4px;
+  left: 50%;
+  width: 24px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0,0,0,.14) 40%,
+    rgba(0,0,0,.22) 50%,
+    rgba(0,0,0,.14) 60%,
+    transparent 100%);
+  z-index: 25;
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+/* コントロール */
+.pb-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+  padding: 0 8px;
+}
+.pb-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--grad-fire);
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 6px 18px rgba(255,122,15,.4), inset 0 1px 0 rgba(255,255,255,.35);
+  transition: transform .3s, box-shadow .3s;
+}
+.pb-btn:hover {
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: 0 10px 24px rgba(255,122,15,.55), inset 0 1px 0 rgba(255,255,255,.45);
+}
+.pb-btn:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+  transform: none;
+}
+.pb-dots {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.pb-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(31,82,176,.25);
+  cursor: pointer;
+  transition: all .3s;
+  padding: 0;
+}
+.pb-dot.active {
+  background: var(--accent);
+  transform: scale(1.4);
+  box-shadow: 0 0 12px rgba(255,122,15,.6);
+}
+.pb-dot:hover { background: var(--accent-2); }
+
+.pb-counter {
+  text-align: center;
+  margin-top: 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-soft);
+  letter-spacing: .1em;
+}
+.pb-counter em { font-style: normal; color: var(--muted); margin: 0 4px; }
+.pb-counter #pbCurrent {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* モバイル：縦分割（イラスト上・テキスト下） */
+@media (max-width: 780px) {
+  .pb-book { max-width: 100%; }
+  .pb-stage { aspect-ratio: 3 / 4; min-height: 560px; }
+  .pb-inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: 45% 55%;
+  }
+  .pb-illust {
+    border-right: none;
+    border-bottom: 1px dashed rgba(31,82,176,.2);
+    padding: 16px;
+  }
+  .pb-side { padding: 18px 20px; }
+  .pb-text .ab-headline { font-size: 17px; }
+  .pb-text p { font-size: 13px; line-height: 1.8; }
+  .pb-spine {
+    top: 45%; left: 4px; right: 4px; bottom: auto;
+    width: auto; height: 24px;
+    transform: none;
+    background: linear-gradient(0deg,
+      transparent 0%, rgba(0,0,0,.14) 40%, rgba(0,0,0,.22) 50%,
+      rgba(0,0,0,.14) 60%, transparent 100%);
+  }
+}
+
+/* ============================================================
+   About 絵本ページスタイル（4 Chapters）— 旧
    ============================================================ */
 .about-book {
   display: flex;
