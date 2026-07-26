@@ -836,24 +836,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .estimate-sec{ z-index: 11; }
 .faq-sec     { z-index: 12; }
 
-/* セクション上部のブランドアクセントライン */
-.ed-sec::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 56px; height: 3px;
-  background: var(--grad-accent);
-  border-radius: 0 0 3px 3px;
-  box-shadow: 0 2px 12px rgba(255,122,15,.4);
-}
-
-/* ダークセクション（for-you / estimate / cta / footer）はアクセントカラーを白系に */
-.for-you::before,
-.estimate-sec::before {
-  background: linear-gradient(90deg, #FFBD3A, #FF7A0F);
-  box-shadow: 0 2px 16px rgba(255,189,58,.6);
-}
+/* セクション境界は角丸カーブ + 上向きシャドウだけでシンプルに（アクセントバーは無し） */
 
 .ed-grid {
   display: grid;
