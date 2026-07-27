@@ -49,10 +49,10 @@
   "inLanguage": "ja",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "東風平1033-2 シャトレ長田101号",
-    "addressLocality": "島尻郡八重瀬町",
+    "streetAddress": "喜屋武261-2",
+    "addressLocality": "島尻郡南風原町",
     "addressRegion": "沖縄県",
-    "postalCode": "901-0401",
+    "postalCode": "901-1113",
     "addressCountry": "JP"
   },
   "openingHours": ["Mo-Sa 08:00-17:00"],
@@ -493,7 +493,7 @@
             <div class="access-info">
               <div class="access-detail">
                 <h3>Address</h3>
-                <p id="accessAddress">沖縄県八重瀬町</p>
+                <p id="accessAddress">沖縄県南風原町</p>
               </div>
               <div class="access-detail">
                 <h3>Tel</h3>
@@ -619,7 +619,7 @@
         <div>
           <p class="footer-name nav-brand-ja">住まいドクタースマイル</p>
           <p class="footer-en">Sumai Doctor Smile</p>
-          <p class="footer-addr">沖縄県八重瀬町</p>
+          <p class="footer-addr">沖縄県南風原町</p>
           <a href="tel:0989875500" class="footer-tel">098-987-5500</a>
         </div>
         <div class="footer-links">
@@ -1213,30 +1213,29 @@ if (heroEl) countIO.observe(heroEl);
     pages.forEach(function(p) {
       var idx = parseInt(p.getAttribute('data-idx'), 10);
       var inner = p.querySelector('.pb-inner');
+      /* 回転対象は右ページ (pb-text) だけ。折山を軸に */
+      var flipTarget = p.querySelector('.pb-text');
       p.classList.remove('pb-current', 'pb-turned', 'pb-upcoming');
       /* 旧テスト残骸を除去 */
       p.style.removeProperty('translate');
       p.style.removeProperty('scale');
       p.style.removeProperty('opacity');
-      if (inner) {
-        inner.style.removeProperty('opacity');
-      }
+      if (inner) inner.style.removeProperty('transform');
       if (idx < current) {
         p.classList.add('pb-turned');
         p.style.zIndex = idx;
         p.style.pointerEvents = 'none';
-        if (inner) inner.style.setProperty('transform', turnedTransform, 'important');
+        if (flipTarget) flipTarget.style.setProperty('transform', turnedTransform, 'important');
       } else if (idx === current) {
         p.classList.add('pb-current');
         p.style.zIndex = 100;
         p.style.pointerEvents = 'auto';
-        if (inner) inner.style.setProperty('transform', frontTransform, 'important');
+        if (flipTarget) flipTarget.style.setProperty('transform', frontTransform, 'important');
       } else {
-        /* 未来ページ：現在ページの真下で正面向き待機 */
         p.classList.add('pb-upcoming');
         p.style.zIndex = (50 - idx);
         p.style.pointerEvents = 'none';
-        if (inner) inner.style.setProperty('transform', frontTransform, 'important');
+        if (flipTarget) flipTarget.style.setProperty('transform', frontTransform, 'important');
       }
     });
     dots.forEach(function(d) {
