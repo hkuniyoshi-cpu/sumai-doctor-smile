@@ -2362,23 +2362,30 @@ a.blog-card { text-decoration: none; color: inherit; }
    パートナーサイト表示（公式サイトあり・フルワイドバー）
    ============================================================ */
 .partner-notice {
-  background: linear-gradient(90deg, rgba(232,114,12,.08), rgba(232,114,12,.14), rgba(232,114,12,.08));
-  border-top: 1px solid rgba(232,114,12,.25);
-  padding: 18px 24px;
+  background: linear-gradient(90deg, #0F2560 0%, #1F52B0 55%, #0F2560 100%);
+  border-top: 2px solid rgba(255,189,58,.5);
+  padding: 20px 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  gap: 20px;
   flex-wrap: wrap;
   margin-left: var(--sb-w);
+  box-shadow: 0 -6px 20px -12px rgba(15,37,96,.4), inset 0 1px 0 rgba(255,255,255,.08);
 }
 .partner-notice p {
   font-family: var(--sans-jp);
-  font-size: 12px;
-  color: rgba(255,255,255,.75);
+  font-size: 12.5px;
+  color: rgba(255,255,255,.95);
   letter-spacing: .06em;
   margin: 0;
   line-height: 1.6;
+  text-shadow: 0 1px 2px rgba(0,0,0,.3);
+}
+.partner-notice p strong {
+  color: var(--accent-2);
+  font-weight: 700;
+  padding: 0 2px;
 }
 .partner-notice a {
   display: inline-flex;
