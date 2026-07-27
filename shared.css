@@ -969,14 +969,14 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   position: relative;
   max-width: 960px;
   margin: 32px auto 24px;
-  perspective: 2200px;
-  perspective-origin: 50% 40%;
+  overflow: hidden;  /* モバイルはみ出し防止 */
 }
 .pb-stage {
   position: relative;
   aspect-ratio: 16 / 9;
   min-height: 420px;
-  transform-style: preserve-3d;
+  perspective: 2200px;
+  perspective-origin: 50% 40%;
 }
 /* 本の背景（革の表紙のイメージ） */
 .pb-stage::before {
@@ -993,18 +993,53 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .pb-page {
   position: absolute;
   inset: 0;
+  transform-style: preserve-3d;
+  /* article 要素の transform はブラウザ差があるため .pb-inner を回転させる */
+}
+/* pb-inner (DIV) が回転する層 */
+.pb-inner {
+  position: absolute;
+  inset: 0;
   border-radius: 8px;
   background: linear-gradient(135deg, #FFF9F0 0%, #FFF2DE 100%);
-  /* 初期は非表示（JSで opacity/translate/scale をインライン設定して動かす） */
-  opacity: 0;
-  transition:
-    translate .85s cubic-bezier(.65,.03,.28,1),
-    scale .85s cubic-bezier(.65,.03,.28,1),
-    opacity .55s ease,
-    box-shadow .8s ease;
   box-shadow: 0 10px 30px -12px rgba(15,37,96,.35);
   overflow: hidden;
-  will-change: opacity;
+  transform: perspective(1800px) rotateY(0deg);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition:
+    transform .95s cubic-bezier(.65,.03,.28,1),
+    opacity .55s ease,
+    box-shadow .8s ease;
+  opacity: 0;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+/* current page: 正面表示 */
+.pb-page.pb-current .pb-inner {
+  transform: perspective(1800px) rotateY(0deg);
+  opacity: 1;
+}
+/* turned (めくり終わった): 左へ回転 */
+.pb-page.pb-turned .pb-inner {
+  transform: perspective(1800px) rotateY(-165deg);
+  opacity: 0;
+  box-shadow: 0 6px 20px -10px rgba(15,37,96,.2);
+}
+/* future (待機): 少し右へ縮小 */
+.pb-page.pb-upcoming .pb-inner {
+  transform: perspective(1800px) rotateY(0deg) scale(.95);
+  opacity: 0;
+}
+/* ページ表面のグラデーション（めくり中の陰） */
+.pb-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,.15) 0%, transparent 6%);
+  pointer-events: none;
+  z-index: 3;
+  border-radius: 8px 0 0 8px;
 }
 /* ページ紙質（かすかな縦目線） */
 .pb-page::before {

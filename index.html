@@ -1201,27 +1201,36 @@ if (heroEl) countIO.observe(heroEl);
   function update() {
     pages.forEach(function(p) {
       var idx = parseInt(p.getAttribute('data-idx'), 10);
+      var inner = p.querySelector('.pb-inner');
+      p.classList.remove('pb-current', 'pb-turned', 'pb-upcoming');
+      /* インライン残骸を pb-page から除去 */
+      p.style.removeProperty('translate');
+      p.style.removeProperty('scale');
+      p.style.removeProperty('opacity');
       if (idx < current) {
-        /* めくり終わり：左へ */
-        p.style.setProperty('translate', '-30% 0', 'important');
-        p.style.setProperty('scale', '.9', 'important');
-        p.style.setProperty('opacity', '0', 'important');
+        p.classList.add('pb-turned');
         p.style.zIndex = idx;
         p.style.pointerEvents = 'none';
+        if (inner) {
+          inner.style.setProperty('transform', 'perspective(1800px) rotateY(-165deg)', 'important');
+          inner.style.setProperty('opacity', '0', 'important');
+        }
       } else if (idx === current) {
-        /* 現在：正面 */
-        p.style.setProperty('translate', '0 0', 'important');
-        p.style.setProperty('scale', '1', 'important');
-        p.style.setProperty('opacity', '1', 'important');
+        p.classList.add('pb-current');
         p.style.zIndex = 100;
         p.style.pointerEvents = 'auto';
+        if (inner) {
+          inner.style.setProperty('transform', 'perspective(1800px) rotateY(0deg)', 'important');
+          inner.style.setProperty('opacity', '1', 'important');
+        }
       } else {
-        /* 未来：右で待機 */
-        p.style.setProperty('translate', '30% 0', 'important');
-        p.style.setProperty('scale', '.9', 'important');
-        p.style.setProperty('opacity', '0', 'important');
+        p.classList.add('pb-upcoming');
         p.style.zIndex = (50 - idx);
         p.style.pointerEvents = 'none';
+        if (inner) {
+          inner.style.setProperty('transform', 'perspective(1800px) rotateY(0deg) scale(.95)', 'important');
+          inner.style.setProperty('opacity', '0', 'important');
+        }
       }
     });
     dots.forEach(function(d) {
