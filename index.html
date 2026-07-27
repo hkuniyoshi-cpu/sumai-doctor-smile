@@ -1076,6 +1076,19 @@ function applyAll(d) {
   if (d.delivery)  applyDelivery(d.delivery);
   if (d.faq)       applyFAQ(d.faq);
   if (d.cta)       applyCTA(d.cta);
+  /* CMS注入後、reveal-stagger の子要素に強制で visible を付与
+     （observer の空発火→unobserve タイミング問題の確実な回避） */
+  setTimeout(function() {
+    document.querySelectorAll('.reveal-stagger').forEach(function(parent) {
+      Array.prototype.slice.call(parent.children).forEach(function(child, i) {
+        setTimeout(function() { child.classList.add('visible'); }, 100 + i * 80);
+      });
+    });
+    /* reveal 単体クラスも同様に */
+    document.querySelectorAll('.reveal').forEach(function(el){
+      if (!el.classList.contains('visible')) el.classList.add('visible');
+    });
+  }, 100);
 }
 
 /* ----------------------------------------------------------

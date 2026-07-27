@@ -1308,22 +1308,30 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
     line-height: 1.8;
     max-width: 100%;
   }
-  /* モバイル：綴じ影を中央横に */
-  .pb-spine {
-    top: 42%; left: 4px; right: 4px; bottom: auto;
-    width: auto; height: 20px;
+  /* モバイル：綴じ影を中央横に（イラスト下端） */
+  .pb-inner::before {
+    top: 42%; bottom: auto;
+    left: 0; right: 0;
+    width: auto; height: 22px;
     transform: none;
     background: linear-gradient(0deg,
       transparent 0%, rgba(0,0,0,.14) 40%, rgba(0,0,0,.22) 50%,
       rgba(0,0,0,.14) 60%, transparent 100%);
   }
-  /* モバイル：折山はトップ（上端＝ヒンジ） */
-  .pb-inner {
-    transform-origin: 50% 0%;
-    border-radius: 8px;
+  .pb-spine { display: none; }  /* 旧要素は非表示 */
+
+  /* モバイル：右ページ→下ページ、折山は上端（= イラスト下端との境界） */
+  .pb-text {
+    transform-origin: 50% 0%;  /* 上端 = 綴じ */
   }
-  .pb-page.pb-turned .pb-inner {
-    transform: perspective(1800px) rotateX(172deg);
+  .pb-page.pb-turned .pb-text {
+    transform: perspective(1800px) rotateX(180deg);
+  }
+  .pb-page.pb-current .pb-text {
+    transform: perspective(1800px) rotateX(0deg);
+  }
+  .pb-page.pb-upcoming .pb-text {
+    transform: perspective(1800px) rotateX(0deg);
   }
   /* コントロールボタン圧縮 */
   .pb-controls { gap: 16px; margin-top: 18px; }
