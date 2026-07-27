@@ -996,7 +996,8 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   transform-style: preserve-3d;
   /* article 要素の transform はブラウザ差があるため .pb-inner を回転させる */
 }
-/* pb-inner (DIV) が回転する層。折山（左端＝本の綴じ）を軸に右側が奥へめくれる */
+/* pb-inner (DIV) が回転する層。折山（左端＝本の綴じ）を軸に右側が奥へめくれる。
+   ポイント：opacity は使わず backface-visibility でめくり後は非表示 */
 .pb-inner {
   position: absolute;
   inset: 0;
@@ -1004,61 +1005,53 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   background: linear-gradient(135deg, #FFF9F0 0%, #FFF2DE 100%);
   box-shadow:
     0 10px 30px -12px rgba(15,37,96,.35),
-    -3px 0 8px -4px rgba(0,0,0,.15);  /* 折山側の綴じ影 */
+    -3px 0 8px -4px rgba(0,0,0,.15);
   overflow: hidden;
   transform: perspective(1800px) rotateY(0deg);
-  transform-origin: 0% 50%;  /* 左端 = 折山 */
+  transform-origin: 0% 50%;
   transform-style: preserve-3d;
-  transition:
-    transform 1.1s cubic-bezier(.55,.03,.3,1),
-    opacity .55s ease .1s,
-    box-shadow .9s ease;
-  opacity: 0;
-  will-change: transform, opacity;
+  transition: transform 1.1s cubic-bezier(.55,.03,.3,1), box-shadow .9s ease;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 /* current page: 正面表示 */
 .pb-page.pb-current .pb-inner {
   transform: perspective(1800px) rotateY(0deg);
-  opacity: 1;
 }
-/* turned (めくり終わった): 折山を軸に左へ180度めくれた */
+/* turned (めくり終わった): 折山を軸に180度めくれ、裏面が視聴者側 → backface で非表示 */
 .pb-page.pb-turned .pb-inner {
-  transform: perspective(1800px) rotateY(-172deg);
-  opacity: 0;
+  transform: perspective(1800px) rotateY(-180deg);
   box-shadow: 0 4px 14px -6px rgba(15,37,96,.2);
 }
-/* future (待機): 少し縮小して裏に控える */
+/* future (待機): 現在ページの真下に控える（rotateなし。上のページに隠れて見えない） */
 .pb-page.pb-upcoming .pb-inner {
-  transform: perspective(1800px) rotateY(0deg) scale(.97);
-  opacity: 0;
+  transform: perspective(1800px) rotateY(0deg);
 }
-/* ページ表面のグラデーション（めくり中の陰） */
+/* ページ左端の綴じ影（折山） */
 .pb-inner::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.05) 8%, transparent 15%),
-    linear-gradient(90deg, transparent 90%, rgba(0,0,0,.08) 100%);
+    linear-gradient(90deg, rgba(0,0,0,.20) 0%, rgba(0,0,0,.05) 6%, transparent 12%);
   pointer-events: none;
   z-index: 3;
   border-radius: 6px 8px 8px 6px;
 }
-/* めくり中の裏側の紙質グラデ */
+/* めくり中に走る影（回転度合いに応じて濃くなる） */
 .pb-inner::after {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(0,0,0,.25) 0%, transparent 12%);
+  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 100%);
   opacity: 0;
   pointer-events: none;
   z-index: 4;
-  transition: opacity .5s;
+  transition: opacity .55s ease;
+  border-radius: 6px 8px 8px 6px;
 }
-.pb-page.pb-turned .pb-inner::after {
-  opacity: .6;
-}
+.pb-page.pb-turned .pb-inner::after { opacity: .5; }
 /* ページ紙質（かすかな縦目線） */
 .pb-page::before {
   content: '';

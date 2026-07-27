@@ -297,10 +297,12 @@
                   </div>
                 </div>
               </article>
+
+              <!-- 綴じ影は stage 内に閉じ込める -->
+              <div class="pb-spine" aria-hidden="true"></div>
             </div>
 
-            <!-- 本の綴じ+コントロール -->
-            <div class="pb-spine" aria-hidden="true"></div>
+            <!-- コントロール -->
             <div class="pb-controls">
               <button class="pb-btn pb-prev" type="button" aria-label="前のページ">◀</button>
               <div class="pb-dots" role="tablist">
@@ -1199,39 +1201,42 @@ if (heroEl) countIO.observe(heroEl);
   var autoTimer = null;
   var AUTO_MS = 7000;
 
+  /* モバイル判定は毎回チェック（回転軸を X/Y 切替） */
+  function flipAxis() {
+    return window.matchMedia('(max-width: 780px)').matches ? 'X' : 'Y';
+  }
+
   function update() {
+    var axis = flipAxis();
+    var turnedTransform = 'perspective(1800px) rotate' + axis + '(' + (axis === 'X' ? '' : '-') + '180deg)';
+    var frontTransform  = 'perspective(1800px) rotate' + axis + '(0deg)';
     pages.forEach(function(p) {
       var idx = parseInt(p.getAttribute('data-idx'), 10);
       var inner = p.querySelector('.pb-inner');
       p.classList.remove('pb-current', 'pb-turned', 'pb-upcoming');
-      /* インライン残骸を pb-page から除去 */
+      /* 旧テスト残骸を除去 */
       p.style.removeProperty('translate');
       p.style.removeProperty('scale');
       p.style.removeProperty('opacity');
+      if (inner) {
+        inner.style.removeProperty('opacity');
+      }
       if (idx < current) {
         p.classList.add('pb-turned');
         p.style.zIndex = idx;
         p.style.pointerEvents = 'none';
-        if (inner) {
-          inner.style.setProperty('transform', 'perspective(1800px) rotateY(-165deg)', 'important');
-          inner.style.setProperty('opacity', '0', 'important');
-        }
+        if (inner) inner.style.setProperty('transform', turnedTransform, 'important');
       } else if (idx === current) {
         p.classList.add('pb-current');
         p.style.zIndex = 100;
         p.style.pointerEvents = 'auto';
-        if (inner) {
-          inner.style.setProperty('transform', 'perspective(1800px) rotateY(0deg)', 'important');
-          inner.style.setProperty('opacity', '1', 'important');
-        }
+        if (inner) inner.style.setProperty('transform', frontTransform, 'important');
       } else {
+        /* 未来ページ：現在ページの真下で正面向き待機 */
         p.classList.add('pb-upcoming');
         p.style.zIndex = (50 - idx);
         p.style.pointerEvents = 'none';
-        if (inner) {
-          inner.style.setProperty('transform', 'perspective(1800px) rotateY(0deg) scale(.95)', 'important');
-          inner.style.setProperty('opacity', '0', 'important');
-        }
+        if (inner) inner.style.setProperty('transform', frontTransform, 'important');
       }
     });
     dots.forEach(function(d) {
@@ -1239,6 +1244,8 @@ if (heroEl) countIO.observe(heroEl);
     });
     if (counter) counter.textContent = current;
   }
+  /* 画面サイズ変更時も再計算 */
+  window.addEventListener('resize', function(){ update(); }, { passive: true });
 
   function goTo(n) {
     if (busy) return;
