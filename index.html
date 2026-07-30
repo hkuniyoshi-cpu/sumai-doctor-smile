@@ -721,13 +721,28 @@ function driveImg(url) {
    ---------------------------------------------------------- */
 function applySettings(s) {
   if (!s || typeof s !== 'object') return;
+  /* 日本語キー ⇔ 英語キーを正規化 */
+  s.name        = s.name        || s.siteName || s['店名'];
+  s.gbpUrl      = s.gbpUrl      || s['GoogleビジネスプロフィールURL'] || s['GBP URL'] || '';
+  s.officialUrl = s.officialUrl || s['公式サイトURL'] || s['公式サイト'] || '';
+  s.tel         = s.tel         || s['電話番号'];
+  s.address     = s.address     || s['住所'];
+  s.copyright   = s.copyright   || s['コピーライト'];
+
   document.querySelectorAll('.nav-brand-ja, .footer-name').forEach(function(el) {
     if (s.name) el.textContent = s.name;
   });
   var copy = document.querySelector('.footer-copy');
-  if (copy && s.name) copy.textContent = '© 2025 ' + s.name + ' All Rights Reserved.';
+  if (copy && s.copyright) copy.textContent = s.copyright;
+  else if (copy && s.name) copy.textContent = '© 2025 ' + s.name + ' All Rights Reserved.';
+
+  /* フッター住所（もしあれば） */
+  document.querySelectorAll('.footer-addr').forEach(function(el){
+    if (s.address) el.textContent = s.address;
+  });
+
   if (s.gbpUrl) {
-    var gbpUrl = s.gbpUrl.trim();
+    var gbpUrl = String(s.gbpUrl).trim();
     if (gbpUrl.startsWith('<')) {
       var m = gbpUrl.match(/src="([^"]+)"/);
       gbpUrl = m ? m[1] : '#';
@@ -735,9 +750,6 @@ function applySettings(s) {
     s.gbpUrl = gbpUrl;
     var moreBtn = document.getElementById('reviewsMoreBtn');
     if (moreBtn && gbpUrl !== '#') moreBtn.href = gbpUrl;
-  }
-  if (!s.officialUrl) {
-    s.officialUrl = s['公式サイトURL'] || s['公式サイト'] || '';
   }
   var partnerLink = document.getElementById('partnerLink');
   if (partnerLink && s.officialUrl) partnerLink.href = s.officialUrl;
@@ -959,22 +971,55 @@ function applyBlog(items) {
 
 function applyAccess(a) {
   if (!a || typeof a !== 'object') return;
+  /* 日本語キー/英語キー両対応 */
+  var address  = a.address  || a['住所'];
+  var closedV  = a.closed   || a['定休日'];
+  var mapEmbed = a.mapEmbed || a['地図埋め込みURL'];
+  var note     = a.note     || a['備考'];
+
   var addr = document.getElementById('accessAddress');
-  if (addr && a.address) addr.textContent = a.address;
+  if (addr && address) addr.textContent = address;
   var closed = document.getElementById('accessClosed');
-  if (closed && a.closed) closed.textContent = a.closed;
+  if (closed && closedV) closed.textContent = closedV;
+
+  /* 曜日別営業時間から動的に hours 表を組み立てる */
   var tbody = document.getElementById('hoursTbody');
-  if (tbody && Array.isArray(a.hours) && a.hours.length) {
-    tbody.innerHTML = a.hours.map(function(h) {
-      return '<tr' + (h.closed ? ' class="closed"' : '') + '>' +
-        '<th>' + esc(h.day || h.label || '') + '</th>' +
-        '<td>' + esc(h.time || h.value || '') + '</td>' +
-      '</tr>';
-    }).join('');
+  if (tbody) {
+    var weekMap = [
+      ['月','月曜営業時間'], ['火','火曜営業時間'], ['水','水曜営業時間'],
+      ['木','木曜営業時間'], ['金','金曜営業時間'], ['土','土曜営業時間'],
+      ['日','日曜営業時間']
+    ];
+    /* まとめられる連続日をレンジ化しつつ表示 */
+    var rows = [];
+    var buffer = null;
+    weekMap.forEach(function(pair) {
+      var day = pair[0], key = pair[1];
+      var time = a[key];
+      if (!time) return;
+      if (buffer && buffer.time === time) {
+        buffer.dayEnd = day;
+      } else {
+        if (buffer) rows.push(buffer);
+        buffer = { dayStart: day, dayEnd: day, time: time };
+      }
+    });
+    if (buffer) rows.push(buffer);
+    if (rows.length) {
+      tbody.innerHTML = rows.map(function(r) {
+        var label = r.dayStart === r.dayEnd ? r.dayStart : (r.dayStart + '〜' + r.dayEnd);
+        var isClosed = /定休|休/.test(r.time);
+        return '<tr' + (isClosed ? ' class="closed"' : '') + '>' +
+          '<th>' + esc(label) + '</th>' +
+          '<td>' + esc(r.time) + '</td>' +
+        '</tr>';
+      }).join('');
+    }
   }
+
   var mapDiv = document.getElementById('mapEmbed');
-  if (mapDiv && a.mapEmbed) {
-    var val = String(a.mapEmbed).trim();
+  if (mapDiv && mapEmbed) {
+    var val = String(mapEmbed).trim();
     if (val.toLowerCase().startsWith('<iframe')) {
       var tmp = document.createElement('div');
       tmp.innerHTML = val;
@@ -991,7 +1036,7 @@ function applyAccess(a) {
     }
   }
   var noteEl = document.getElementById('hoursNote');
-  if (noteEl && a.note) noteEl.textContent = a.note;
+  if (noteEl && note) noteEl.textContent = note;
 }
 
 function applySNS(items) {
