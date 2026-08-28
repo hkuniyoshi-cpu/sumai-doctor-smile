@@ -60,7 +60,11 @@
   "sameAs": [
     "https://sumai-dr-smile-okinawa.com/",
     "https://www.instagram.com/sumai_dr.smile/",
-    "https://www.facebook.com/sumaidoctorsmile"
+    "https://www.facebook.com/sumaidoctorsmile",
+    "https://curama.jp/384452278/",
+    "https://map.yahoo.co.jp/v3/place/m8D54HiAciE",
+    "https://www.navitime.co.jp/poi?spt=00011.100249198",
+    "https://townpage.goo.ne.jp/shopdetail.php?matomeid=520000163129350001"
   ]
 }
 </script>
@@ -107,7 +111,7 @@
     <a href="#hero" class="nav-brand">
       <img class="nav-brand-logo" src="/logo.png" alt="住まいドクタースマイル" />
       <span class="nav-brand-text">
-        <span class="nav-brand-ja-txt nav-brand-ja">住まいドクタースマイル</span>
+        <span class="nav-brand-ja-txt nav-brand-ja" data-cms="settings.店名">住まいドクタースマイル</span>
         <span class="en">Sumai Doctor Smile</span>
       </span>
     </a>
@@ -493,7 +497,7 @@
             <div class="access-info">
               <div class="access-detail">
                 <h3>Address</h3>
-                <p id="accessAddress">沖縄県南風原町</p>
+                <p id="accessAddress" data-cms="access.住所">沖縄県南風原町</p>
               </div>
               <div class="access-detail">
                 <h3>Tel</h3>
@@ -511,7 +515,7 @@
               </div>
               <div class="access-detail">
                 <h3>Closed</h3>
-                <p id="accessClosed">日曜日・祝日</p>
+                <p id="accessClosed" data-cms="access.定休日">日曜日・祝日</p>
               </div>
             </div>
           </div>
@@ -617,10 +621,10 @@
     <div class="container">
       <div class="footer-inner">
         <div>
-          <p class="footer-name nav-brand-ja">住まいドクタースマイル</p>
+          <p class="footer-name nav-brand-ja" data-cms="settings.店名">住まいドクタースマイル</p>
           <p class="footer-en">Sumai Doctor Smile</p>
-          <p class="footer-addr">沖縄県南風原町</p>
-          <a href="tel:0989875500" class="footer-tel">098-987-5500</a>
+          <p class="footer-addr" data-cms="settings.住所">沖縄県南風原町</p>
+          <a href="tel:0989875500" class="footer-tel" data-cms="settings.電話番号">098-987-5500</a>
         </div>
         <div class="footer-links">
           <h4>Services</h4>
@@ -643,7 +647,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="footer-copy">© 2025 住まいドクタースマイル All Rights Reserved.</p>
+        <p class="footer-copy" data-cms="settings.コピーライト">© 2025 住まいドクタースマイル All Rights Reserved.</p>
         <p class="produced-by">
           Produced by <a href="https://search-mania.net/" target="_blank" rel="noopener noreferrer">SearchMania Inc.</a>
         </p>
@@ -697,6 +701,30 @@ function esc(s) {
   return String(s || '')
     .replace(/&/g,'&amp;').replace(/</g,'&lt;')
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* data-cms="ns.key" 要素を values[key] で置換
+   プレースホルダー <xxx> や空欄は無視してハードコード温存 */
+function bindCmsSlots(ns, values) {
+  if (!values || typeof values !== 'object') return;
+  document.querySelectorAll('[data-cms^="' + ns + '."]').forEach(function(el) {
+    var key = el.getAttribute('data-cms').slice(ns.length + 1);
+    var v = values[key];
+    if (v == null) return;
+    v = String(v).trim();
+    if (!v) return;
+    if (/^<.*>$/.test(v)) return;  // <店名> 等のプレースホルダー無視
+    /* リンクは textContent と href の両方を更新 */
+    if (el.tagName === 'A') {
+      el.textContent = v;
+      /* 電話番号なら tel: リンクも設定 */
+      if (key === '電話番号' || key === 'tel') {
+        el.href = 'tel:' + v.replace(/[^0-9+]/g, '');
+      }
+    } else {
+      el.innerHTML = esc(v).replace(/\n/g, '<br>');
+    }
+  });
 }
 function fmtDate(s) {
   if (!s) return '';
@@ -754,6 +782,8 @@ function applySettings(s) {
   var partnerLink = document.getElementById('partnerLink');
   if (partnerLink && s.officialUrl) partnerLink.href = s.officialUrl;
   window._settings = s;
+  /* data-cms="settings.*" 要素にSheets値を反映 */
+  bindCmsSlots('settings', s);
 }
 
 function applyHero(h) {
@@ -951,7 +981,8 @@ function applyBlog(items) {
     var imgUrl = driveImg(b.image);
     var slugMatch = (b.url || '').match(/\/blog\/([^\/\?#]+)/);
     var postSlug  = slugMatch ? slugMatch[1] : (b.date || '');
-    var blogHref  = postSlug ? '/blog/?post=' + postSlug + '&n=' + i : null;
+    /* パス型 URL（Cloudflare Pages Function /blog/[slug].js が SSR で応答） */
+    var blogHref  = postSlug ? '/blog/' + postSlug + '/' : null;
     var tagOpen  = blogHref
       ? '<a href="' + esc(blogHref) + '" class="e blog-card reveal">'
       : '<article class="e blog-card reveal" role="button" tabindex="0" data-idx="' + i + '">';
@@ -1037,6 +1068,8 @@ function applyAccess(a) {
   }
   var noteEl = document.getElementById('hoursNote');
   if (noteEl && note) noteEl.textContent = note;
+  /* data-cms="access.*" 要素にSheets値を反映 */
+  bindCmsSlots('access', a);
 }
 
 function applySNS(items) {

@@ -1,14 +1,55 @@
 User-agent: *
 Allow: /
 
-# AI クローラー（学習目的のクロールを許可）
+# ============================================================
+# AI クローラー（学習・検索・回答生成すべて許可）
+# ============================================================
+
+# OpenAI / ChatGPT 系
 User-agent: GPTBot
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic / Claude 系
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
 User-agent: PerplexityBot
+Allow: /
+
+# Google 拡張（AI 向け明示許可）
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+# ByteDance
+User-agent: Bytespider
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://sumai-doctor-smile.search-mania.net/sitemap.xml
