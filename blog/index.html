@@ -293,7 +293,7 @@ function render(item) {
       (imgUrl ? '<img src="' + esc(imgUrl) + '" alt="' + esc(title) + '" loading="eager">' : '') +
       '<div class="card-body">' +
         (item.date ? '<span class="date">' + esc(fmtDate(item.date)) + '</span>' : '') +
-        (item.title && item.title.trim() ? '<h1>' + esc(item.title) + '</h1>' : '') +
+        '<h1>' + esc(title) + '</h1>' +
         '<p class="text">' + esc(item.body || '') + '</p>' +
       '</div>' +
     '</article>' +
