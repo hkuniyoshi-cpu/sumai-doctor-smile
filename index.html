@@ -979,10 +979,12 @@ function applyBlog(items) {
     if (!rawTitle && b.date) rawTitle = fmtDate(b.date) + ' の投稿';
     var shortTitle = rawTitle.length > 44 ? rawTitle.slice(0, 44) + '…' : rawTitle;
     var imgUrl = driveImg(b.image);
-    var slugMatch = (b.url || '').match(/\/blog\/([^\/\?#]+)/);
+    /* F列 url の末尾セグメントを slug に（sitemap.xml.js / blog/[slug].js と同じ規則） */
+    var rawUrl    = String(b.url || '').trim();
+    var slugMatch = rawUrl.match(/\/blog\/([^\/\?#]+)/) || rawUrl.replace(/\/+$/, '').match(/^([^\/\?#:]+)$/);
     var postSlug  = slugMatch ? slugMatch[1] : (b.date || '');
     /* パス型 URL（Cloudflare Pages Function /blog/[slug].js が SSR で応答） */
-    var blogHref  = postSlug ? '/blog/' + postSlug + '/' : null;
+    var blogHref  = postSlug ? '/blog/' + encodeURIComponent(postSlug) + '/' : null;
     var tagOpen  = blogHref
       ? '<a href="' + esc(blogHref) + '" class="e blog-card reveal">'
       : '<article class="e blog-card reveal" role="button" tabindex="0" data-idx="' + i + '">';
