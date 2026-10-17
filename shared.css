@@ -864,7 +864,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 
 .ed-grid {
   display: grid;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: 140px minmax(0, 1fr);   /* 1fr だと横スクロールの中身に引っ張られて列が伸びる */
   gap: 0 72px;
   align-items: start;
 }
@@ -963,164 +963,129 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 }
 
 /* ============================================================
-   About 3Dフリップブック（絵本めくりアニメーション）
+   About 絵本（見開き）— 1枚の紙＝表裏2面のリーフ方式
+   ・左下敷き＝第1章イラスト／右下敷き＝第4章本文
+   ・リーフk：表＝第k章本文（右ページ）／裏＝第k+1章イラスト（左ページ）
+   ・リーフは綴じ（中央）を軸に回り、めくると紙の裏が次の見開きの左ページになる
+   ・回転するリーフは overflow を持たない（preserve-3d が平坦化されるため）。角丸や
+     スクロールは各面（.pb-face）の内側で行う
    ============================================================ */
 .pb-book {
   position: relative;
   max-width: 960px;
   margin: 32px auto 24px;
-  overflow: hidden;  /* モバイルはみ出し防止 */
+  padding: 14px;
+  overflow-x: clip;   /* めくり中の投影で横スクロールを出さない。縦は影を切らない */
+  outline: none;
 }
+.pb-book:focus-visible .pb-stage::before { box-shadow: 0 0 0 3px var(--accent), 0 26px 60px -22px rgba(15,37,96,.6); }
 .pb-stage {
   position: relative;
   aspect-ratio: 16 / 9;
   min-height: 420px;
-  perspective: 2200px;
-  perspective-origin: 50% 40%;
+  perspective: 2400px;
+  perspective-origin: 50% 50%;
+  cursor: pointer;
 }
-/* 本の背景（革の表紙のイメージ） */
+/* 表紙（ハードカバー） */
 .pb-stage::before {
   content: '';
   position: absolute;
-  inset: -14px -14px -14px -14px;
+  inset: -12px;
   background: linear-gradient(135deg, #0F2560 0%, #1F52B0 60%, #FF6B5B 130%);
-  border-radius: 12px;
-  box-shadow:
-    0 24px 60px -20px rgba(15,37,96,.55),
-    inset 0 0 0 1px rgba(255,255,255,.1);
-  z-index: 0;
+  border-radius: 14px;
+  box-shadow: 0 26px 60px -22px rgba(15,37,96,.6), inset 0 0 0 1px rgba(255,255,255,.12);
 }
-.pb-page {
+
+/* ---- ページの配置（PC：左右見開き） ---- */
+.pb-base,
+.pb-leaf {
   position: absolute;
-  inset: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+.pb-base-left  { left: 0;   z-index: 1; }
+.pb-base-right { left: 50%; z-index: 1; }
+.pb-leaf {
+  left: 50%;
+  transform-origin: 0 50%;           /* 左端＝綴じ */
   transform-style: preserve-3d;
-  /* article 要素の transform はブラウザ差があるため .pb-inner を回転させる */
+  transform: rotateY(0deg);
+  transition: transform var(--pb-dur, 1000ms) cubic-bezier(.45, .05, .25, 1);
 }
-/* pb-inner = ページ台紙（回転しない）。中の pb-text だけが折山を軸に回転 */
-.pb-inner {
+.pb-leaf.is-flipped { transform: rotateY(-180deg); }
+.pb-instant .pb-leaf { transition: none !important; }
+
+/* 面（紙1ページ分） */
+.pb-face {
   position: absolute;
   inset: 0;
-  border-radius: 6px 8px 8px 6px;
-  background: linear-gradient(135deg, #FFF9F0 0%, #FFF2DE 100%);
-  box-shadow: 0 10px 30px -12px rgba(15,37,96,.35);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.pb-back { transform: rotateY(180deg); }
+
+/* 紙の見た目 */
+.pb-paper {
   overflow: hidden;
-  transform-style: preserve-3d;
+  background: linear-gradient(135deg, #FFFBF4 0%, #FFF1DD 100%);
 }
-/* 中央の綴じ影（本の背） */
-.pb-inner::before {
+.pb-r { border-radius: 0 10px 10px 0; }   /* 右ページ：外側の角を丸く */
+.pb-l { border-radius: 10px 0 0 10px; }   /* 左ページ：外側の角を丸く */
+/* 綴じ側の陰（紙のたわみ） */
+.pb-paper::after {
   content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.pb-r::after { background: linear-gradient(90deg,  rgba(15,37,96,.16) 0%, rgba(15,37,96,0) 9%); }
+.pb-l::after { background: linear-gradient(270deg, rgba(15,37,96,.16) 0%, rgba(15,37,96,0) 9%); }
+
+/* めくり中の陰：離れていく面は暗く、現れる面は明るく */
+.pb-face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+}
+.pb-front::before { background: linear-gradient(90deg,  rgba(15,37,96,.04) 0%, rgba(15,37,96,.34) 100%); }
+.pb-back::before  { background: linear-gradient(270deg, rgba(15,37,96,.04) 0%, rgba(15,37,96,.34) 100%); }
+.pb-leaf.turn-fwd  .pb-front::before,
+.pb-leaf.turn-back .pb-back::before  { animation: pb-shade-away  var(--pb-dur, 1000ms) ease-in  both; }
+.pb-leaf.turn-fwd  .pb-back::before,
+.pb-leaf.turn-back .pb-front::before { animation: pb-shade-arrive var(--pb-dur, 1000ms) ease-out both; }
+@keyframes pb-shade-away   { 0% { opacity: 0; } 50%, 100% { opacity: 1; } }
+@keyframes pb-shade-arrive { 0%, 50% { opacity: 1; } 100% { opacity: 0; } }
+
+/* 綴じ（本の背） */
+.pb-gutter {
   position: absolute;
   top: 0; bottom: 0;
   left: 50%;
-  width: 22px;
+  width: 26px;
   transform: translateX(-50%);
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(0,0,0,.12) 40%,
-    rgba(0,0,0,.22) 50%,
-    rgba(0,0,0,.12) 60%,
-    transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.14) 40%, rgba(0,0,0,.24) 50%, rgba(0,0,0,.14) 60%, transparent 100%);
   pointer-events: none;
-  z-index: 5;
+  z-index: 40;        /* 静止ページ(1〜14)より上、めくり中のリーフ(50)より下 */
 }
 
-/* 左ページ（イラスト）：静止・チャプター切替でフェード */
+/* 「めくれます」の合図：最初に一度だけ紙の角を持ち上げる */
+.pb-leaf.pb-peek { animation: pb-peek 1.3s cubic-bezier(.45, .05, .25, 1) both; }
+@keyframes pb-peek   { 0%, 100% { transform: rotateY(0deg); } 45% { transform: rotateY(-24deg); } }
+@keyframes pb-peek-m { 0%, 100% { transform: rotateX(0deg); } 45% { transform: rotateX(22deg); } }
+
+/* ---- ページの中身 ---- */
 .pb-illust {
-  transition: opacity .5s ease;
-  opacity: 0;  /* デフォルト非表示 */
-}
-.pb-page.pb-current .pb-illust { opacity: 1; }
-
-/* 右ページ（テキスト）：折山＝左端で3D回転 */
-.pb-text {
-  transform: perspective(1800px) rotateY(0deg);
-  transform-origin: 0% 50%;  /* 左端＝綴じ */
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transition: transform 1.1s cubic-bezier(.55,.03,.3,1);
-  will-change: transform;
-  position: relative;
-}
-.pb-page.pb-current .pb-text {
-  transform: perspective(1800px) rotateY(0deg);
-}
-.pb-page.pb-turned .pb-text {
-  transform: perspective(1800px) rotateY(-180deg);
-}
-.pb-page.pb-upcoming .pb-text {
-  transform: perspective(1800px) rotateY(0deg);
-}
-/* めくり中の右ページに影 */
-.pb-text::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 100%);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 4;
-  transition: opacity .55s ease;
-}
-.pb-page.pb-turned .pb-text::after { opacity: .55; }
-/* ページ紙質（かすかな縦目線） */
-.pb-page::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(15,37,96,.14) 0%, transparent 6%),
-    repeating-linear-gradient(90deg, transparent 0 30px, rgba(15,37,96,.02) 30px 31px);
-  pointer-events: none;
-  z-index: 1;
-}
-/* ページめくり中の裏面カバー */
-.pb-page::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #FFF2DE, #FFE6C7);
-  transform: rotateY(180deg);
-  backface-visibility: hidden;
-  border-radius: 8px;
-}
-.pb-page.turned {
-  transform: rotateY(-178deg);
-  box-shadow: 0 10px 20px -14px rgba(15,37,96,.3);
-}
-.pb-page.turning {
-  z-index: 20;
-}
-.pb-page.current { z-index: 15; }
-.pb-page:not(.turned):not(.current) {
-  z-index: calc(10 - var(--i, 0));
-}
-.pb-page[data-idx="1"] { --i: 1; }
-.pb-page[data-idx="2"] { --i: 2; }
-.pb-page[data-idx="3"] { --i: 3; }
-.pb-page[data-idx="4"] { --i: 4; }
-
-/* 見開き内容 */
-.pb-inner {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  z-index: 2;
-}
-.pb-side {
-  padding: 28px 32px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-}
-.pb-illust {
-  background: linear-gradient(180deg, #F0F6FF, #DBE9FF);
-  border-right: 1px dashed rgba(31,82,176,.2);
   align-items: center;
-  padding: 22px;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(180deg, #F0F6FF, #DBE9FF);
 }
 .pb-illust img {
   max-width: 100%;
@@ -1132,58 +1097,58 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   animation: illust-drift 6s ease-in-out infinite;
 }
 .pb-text {
-  background: linear-gradient(180deg, #FFF9F0, #FFF2DE);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px 34px;
 }
-.pb-text .ab-badge {
+.ab-badge {
+  display: inline-block;
   align-self: flex-start;
+  padding: 5px 14px;
+  background: var(--grad-fire);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  border-radius: 999px;
   margin-bottom: 12px;
+  box-shadow: 0 4px 10px rgba(255,122,15,.35);
 }
-.pb-text .ab-headline {
+.ab-headline {
   font-family: var(--sans-jp);
   font-size: clamp(18px, 2vw, 24px);
   font-weight: 700;
   color: var(--ink);
   line-height: 1.5;
+  letter-spacing: .04em;
   margin-bottom: 14px;
+  word-break: auto-phrase;
 }
-.pb-text .ab-headline em {
+.ab-headline em {
   font-style: normal;
   background: var(--grad-fire);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  padding: 0 2px;
 }
 .pb-text p {
+  min-height: 0;
+  overflow-y: auto;      /* CMS で本文が長くなっても面からはみ出さない */
   font-size: 13.5px;
   line-height: 1.85;
   color: var(--ink-soft);
   letter-spacing: .02em;
   text-align: justify;
-  overflow-y: auto;
-  max-height: 100%;
+  overflow-wrap: break-word;
 }
 .pb-text p::-webkit-scrollbar { width: 4px; }
 .pb-text p::-webkit-scrollbar-thumb { background: rgba(255,122,15,.4); border-radius: 2px; }
+.pb-text p:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 
-/* 中央綴じ影 */
-.pb-spine {
-  position: absolute;
-  top: 4px; bottom: 4px;
-  left: 50%;
-  width: 24px;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(0,0,0,.14) 40%,
-    rgba(0,0,0,.22) 50%,
-    rgba(0,0,0,.14) 60%,
-    transparent 100%);
-  z-index: 25;
-  pointer-events: none;
-  border-radius: 2px;
-}
-
-/* コントロール */
+/* ---- コントロール ---- */
 .pb-controls {
   display: flex;
   align-items: center;
@@ -1204,22 +1169,14 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   cursor: pointer;
   border: none;
   box-shadow: 0 6px 18px rgba(255,122,15,.4), inset 0 1px 0 rgba(255,255,255,.35);
-  transition: transform .3s, box-shadow .3s;
+  transition: transform .3s, box-shadow .3s, opacity .3s;
 }
-.pb-btn:hover {
+.pb-btn:hover:not(:disabled) {
   transform: translateY(-2px) scale(1.08);
   box-shadow: 0 10px 24px rgba(255,122,15,.55), inset 0 1px 0 rgba(255,255,255,.45);
 }
-.pb-btn:disabled {
-  opacity: .35;
-  cursor: not-allowed;
-  transform: none;
-}
-.pb-dots {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
+.pb-btn:disabled { opacity: .35; cursor: default; }
+.pb-dots { display: flex; gap: 10px; align-items: center; }
 .pb-dot {
   width: 10px; height: 10px;
   border-radius: 50%;
@@ -1235,7 +1192,6 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   box-shadow: 0 0 12px rgba(255,122,15,.6);
 }
 .pb-dot:hover { background: var(--accent-2); }
-
 .pb-counter {
   text-align: center;
   margin-top: 10px;
@@ -1245,217 +1201,49 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   letter-spacing: .1em;
 }
 .pb-counter em { font-style: normal; color: var(--muted); margin: 0 4px; }
-.pb-counter #pbCurrent {
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 18px;
-}
+.pb-counter #pbCurrent { color: var(--accent); font-weight: 700; font-size: 18px; }
 
-/* テキスト自動折返し（漢字/カナも安全に） */
-.pb-text p {
-  overflow-wrap: break-word;
-  word-break: break-word;
-  hyphens: auto;
-}
-
-/* モバイル：縦分割（イラスト上・テキスト下） */
+/* ---- モバイル：上下見開き（綴じ＝水平線・上下は同じ高さ） ---- */
 @media (max-width: 780px) {
-  .pb-book {
-    max-width: 100%;
-    margin: 24px 0 20px;
-    overflow: hidden;
-  }
-  .pb-stage {
-    aspect-ratio: auto;
-    min-height: 580px;
-    overflow: hidden;
-  }
-  /* pb-inner (grid親) を縦分割に。position:absolute 継承 */
-  .pb-inner {
-    inset: 0;
-    display: block;  /* grid 上書き解除 */
-  }
-  /* pb-inner の中の grid コンテナ*/
-  .pb-page .pb-inner > .pb-side { position: relative; }
-
-  /* pb-inner を縦の2段 grid に */
-  .pb-page .pb-inner {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    grid-template-rows: 42% 58% !important;
-  }
-  .pb-illust {
-    border-right: none;
-    border-bottom: 1px dashed rgba(31,82,176,.2);
-    padding: 14px;
-    max-width: 100%;
-    min-width: 0;
-  }
-  .pb-illust img {
-    max-width: 90%;
-    max-height: 100%;
-  }
-  .pb-side {
-    padding: 16px 18px;
-    max-width: 100%;
-    min-width: 0;
-    overflow: hidden;
-  }
-  .pb-text .ab-headline { font-size: 16px; margin-bottom: 10px; }
-  .pb-text .ab-badge { margin-bottom: 8px; padding: 4px 10px; font-size: 9px; }
-  .pb-text p {
-    font-size: 12.5px;
-    line-height: 1.8;
-    max-width: 100%;
-  }
-  /* モバイル：綴じ影を中央横に（イラスト下端） */
-  .pb-inner::before {
-    top: 42%; bottom: auto;
+  .pb-book { padding: 12px 10px; margin: 24px 0 20px; }
+  .pb-stage { aspect-ratio: auto; height: 640px; min-height: 0; }
+  .pb-base,
+  .pb-leaf { left: 0; width: 100%; height: 50%; }
+  .pb-base-left { top: 0; }
+  .pb-base-right,
+  .pb-leaf { top: 50%; }
+  .pb-leaf { transform-origin: 50% 0; transform: rotateX(0deg); }   /* 上端＝綴じ */
+  .pb-leaf.is-flipped { transform: rotateX(180deg); }
+  .pb-back { transform: rotateX(180deg); }
+  .pb-r { border-radius: 0 0 10px 10px; }
+  .pb-l { border-radius: 10px 10px 0 0; }
+  .pb-r::after { background: linear-gradient(180deg, rgba(15,37,96,.16) 0%, rgba(15,37,96,0) 9%); }
+  .pb-l::after { background: linear-gradient(0deg,   rgba(15,37,96,.16) 0%, rgba(15,37,96,0) 9%); }
+  .pb-front::before { background: linear-gradient(180deg, rgba(15,37,96,.04) 0%, rgba(15,37,96,.34) 100%); }
+  .pb-back::before  { background: linear-gradient(0deg,   rgba(15,37,96,.04) 0%, rgba(15,37,96,.34) 100%); }
+  .pb-gutter {
+    top: 50%; bottom: auto;
     left: 0; right: 0;
-    width: auto; height: 22px;
-    transform: none;
-    background: linear-gradient(0deg,
-      transparent 0%, rgba(0,0,0,.14) 40%, rgba(0,0,0,.22) 50%,
-      rgba(0,0,0,.14) 60%, transparent 100%);
+    width: auto; height: 24px;
+    transform: translateY(-50%);
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.14) 40%, rgba(0,0,0,.24) 50%, rgba(0,0,0,.14) 60%, transparent 100%);
   }
-  .pb-spine { display: none; }  /* 旧要素は非表示 */
-
-  /* モバイル：右ページ→下ページ、折山は上端（= イラスト下端との境界） */
-  .pb-text {
-    transform-origin: 50% 0%;  /* 上端 = 綴じ */
-  }
-  .pb-page.pb-turned .pb-text {
-    transform: perspective(1800px) rotateX(180deg);
-  }
-  .pb-page.pb-current .pb-text {
-    transform: perspective(1800px) rotateX(0deg);
-  }
-  .pb-page.pb-upcoming .pb-text {
-    transform: perspective(1800px) rotateX(0deg);
-  }
-  /* コントロールボタン圧縮 */
+  .pb-leaf.pb-peek { animation-name: pb-peek-m; }
+  .pb-illust { padding: 14px; }
+  .pb-text { padding: 16px 18px; }
+  .ab-headline { font-size: 16px; margin-bottom: 8px; }
+  .ab-badge { margin-bottom: 8px; padding: 4px 10px; font-size: 9px; }
+  .pb-text p { font-size: 12.5px; line-height: 1.8; }
   .pb-controls { gap: 16px; margin-top: 18px; }
   .pb-btn { width: 42px; height: 42px; font-size: 15px; }
 }
 @media (max-width: 400px) {
-  .pb-stage { min-height: 520px; }
+  .pb-stage { height: 660px; }
   .pb-text p { font-size: 12px; }
 }
-
-/* ============================================================
-   About 絵本ページスタイル（4 Chapters）— 旧
-   ============================================================ */
-.about-book {
-  display: flex;
-  flex-direction: column;
-  gap: 68px;
-  margin-top: 20px;
-  margin-bottom: 40px;
-}
-.ab-scene {
-  display: grid;
-  grid-template-columns: minmax(280px, 44%) 1fr;
-  gap: 40px;
-  align-items: center;
-  padding: 24px;
-  background: linear-gradient(135deg, rgba(255,255,255,.7), rgba(255,255,255,.4));
-  border-radius: 20px;
-  box-shadow:
-    0 10px 30px -18px rgba(15, 37, 96, .25),
-    inset 0 1px 0 rgba(255,255,255,.7);
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out);
-}
-.ab-scene.ab-reverse { grid-template-columns: 1fr minmax(280px, 44%); }
-.ab-scene.ab-reverse .ab-illust { order: 2; }
-.ab-scene.ab-reverse .ab-text   { order: 1; }
-.ab-scene:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 20px 45px -20px rgba(15, 37, 96, .35),
-    inset 0 1px 0 rgba(255,255,255,.9);
-}
-.ab-scene::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 42px; height: 42px;
-  background: linear-gradient(225deg, transparent 48%, rgba(255,122,15,.35) 48%, rgba(255,189,58,.35) 100%);
-  border-radius: 0 20px 0 0;
-}
-.ab-scene.ab-reverse::before {
-  right: auto; left: 0;
-  background: linear-gradient(135deg, transparent 48%, rgba(52,200,255,.35) 48%, rgba(76,224,193,.35) 100%);
-  border-radius: 20px 0 0 0;
-}
-.ab-illust { position: relative; padding: 8px; }
-.ab-illust img {
-  width: 100%; height: auto;
-  display: block;
-  border-radius: 14px;
-  filter: drop-shadow(0 6px 22px rgba(31,82,176,.18));
-  transition: transform .5s var(--ease-out);
-  animation: illust-drift 6s ease-in-out infinite;
-}
-.ab-scene:hover .ab-illust img { transform: rotate(-1deg) scale(1.02); }
-.ab-scene:nth-child(2) .ab-illust img { animation-delay: -1.5s; }
-.ab-scene:nth-child(3) .ab-illust img { animation-delay: -3s; }
-.ab-scene:nth-child(4) .ab-illust img { animation-delay: -4.5s; }
-.ab-text { padding: 8px; }
-.ab-badge {
-  display: inline-block;
-  padding: 5px 14px;
-  background: var(--grad-fire);
-  color: #fff;
-  font-family: var(--sans);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .18em;
-  border-radius: 999px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 10px rgba(255,122,15,.35);
-}
-.ab-headline {
-  font-family: var(--sans-jp);
-  font-size: clamp(20px, 2.4vw, 26px);
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.5;
-  letter-spacing: .04em;
-  margin-bottom: 16px;
-}
-.ab-headline em {
-  font-style: normal;
-  background: var(--grad-fire);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  padding: 0 2px;
-}
-.ab-text p {
-  font-size: 15px;
-  line-height: 1.95;
-  color: var(--ink-soft);
-  text-align: justify;
-  letter-spacing: .02em;
-}
-@media (max-width: 780px) {
-  .about-book { gap: 40px; }
-  .ab-scene, .ab-scene.ab-reverse {
-    grid-template-columns: 1fr;
-    padding: 20px;
-    gap: 18px;
-  }
-  .ab-scene .ab-illust,
-  .ab-scene.ab-reverse .ab-illust { order: 0; }
-  .ab-scene .ab-text,
-  .ab-scene.ab-reverse .ab-text { order: 1; }
-  .ab-illust img { max-width: 340px; margin: 0 auto; }
-  .ab-headline { font-size: 20px; }
-  .ab-text p { font-size: 14px; line-height: 1.9; }
+@media (prefers-reduced-motion: reduce) {
+  .pb-leaf { transition: none; }
+  .pb-leaf.pb-peek { animation: none; }
 }
 
 .about-photos {
@@ -2482,7 +2270,7 @@ a.blog-card { text-decoration: none; color: inherit; }
   .nav-toggle { display: flex; }
   .container { padding: 0 24px; }
   .ed-sec { padding: 80px 0; }
-  .ed-grid { grid-template-columns: 1fr; gap: 32px 0; }
+  .ed-grid { grid-template-columns: minmax(0, 1fr); gap: 32px 0; }
   .ed-aside {
     position: static;
     flex-direction: row;

@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="shared.css?v=20261017">
 
 <!-- Google Search Console 認証 -->
 <meta name="google-site-verification" content="LZg90oxtbqi0v6An7Fc0uO3ufbqcmW4_Qp9mCI2u6wk" />
@@ -247,77 +247,68 @@
             <span class="sec-line line-draw"></span>
           </div>
 
-          <!-- 3D フリップブック -->
-          <div class="pb-book" id="pbBook" data-current="1">
+          <!-- 絵本（見開き）— 1枚の紙＝表裏2面のリーフ方式
+               左下敷き＝第1章イラスト／リーフk＝表:第k章本文・裏:第k+1章イラスト／右下敷き＝第4章本文
+               DOM 順がそのまま章の読み順になるように並べている -->
+          <div class="pb-book" id="pbBook" role="region" aria-roledescription="絵本" aria-label="住まいドクタースマイルのこと（全4章）" tabindex="0">
             <div class="pb-stage">
-              <article class="pb-page" data-idx="1">
-                <div class="pb-inner">
-                  <div class="pb-side pb-illust">
-                    <img src="/assets/about/scene1-doctor.svg" alt="住まいのかかりつけ医" decoding="async"/>
-                  </div>
-                  <div class="pb-side pb-text">
-                    <span class="ab-badge">Chapter 01</span>
-                    <h3 class="ab-headline">住まいの<em>かかりつけ医</em>として</h3>
-                    <p data-para="1">株式会社住まいドクタースマイルは、2015年11月の創業以来、沖縄県島尻郡八重瀬町を拠点に、外壁塗装・屋根工事・防水・リフォーム・エアコンクリーニングまでを一手に担う地域密着型の住宅メンテナンス企業である。目指すのは「住まいのかかりつけ医」——建物のちょっとした不調から大掛かりな塗り替えまで、暮らしの温度感を大切にしながら丁寧に受け止めることを信条としている。</p>
-                  </div>
-                </div>
-              </article>
+              <div class="pb-base pb-base-left pb-paper pb-l pb-illust">
+                <img src="/assets/about/scene1-doctor.svg" alt="住まいのかかりつけ医" decoding="async"/>
+              </div>
 
-              <article class="pb-page" data-idx="2">
-                <div class="pb-inner">
-                  <div class="pb-side pb-illust">
-                    <img src="/assets/about/scene2-climate.svg" alt="沖縄の強い日差し・塩害・台風から住まいを守る" decoding="async"/>
-                  </div>
-                  <div class="pb-side pb-text">
-                    <span class="ab-badge">Chapter 02</span>
-                    <h3 class="ab-headline">沖縄の気候に<em>本当に耐える</em>塗装を</h3>
-                    <p data-para="2">沖縄の住宅は、強い日差し、絶え間ない塩害、そして毎年やってくる台風という、本土とは比べものにならない過酷な環境にさらされている。だからこそ当社は、塗料の選定から下地処理、防水仕様の設計に至るまで、沖縄の気候に本当に耐え得るかを一つひとつ吟味している。表面を整えるだけの塗装ではなく、10年先も安心して暮らせる住まいを残すことが、当社の使命である。</p>
-                  </div>
+              <div class="pb-leaf" data-leaf="1">
+                <div class="pb-face pb-front pb-paper pb-r pb-text">
+                  <span class="ab-badge">Chapter 01</span>
+                  <h3 class="ab-headline">住まいの<em>かかりつけ医</em>として</h3>
+                  <p data-para="1">株式会社住まいドクタースマイルは、2015年11月の創業以来、沖縄県島尻郡八重瀬町を拠点に、外壁塗装・屋根工事・防水・リフォーム・エアコンクリーニングまでを一手に担う地域密着型の住宅メンテナンス企業である。目指すのは「住まいのかかりつけ医」——建物のちょっとした不調から大掛かりな塗り替えまで、暮らしの温度感を大切にしながら丁寧に受け止めることを信条としている。</p>
                 </div>
-              </article>
-
-              <article class="pb-page" data-idx="3">
-                <div class="pb-inner">
-                  <div class="pb-side pb-illust">
-                    <img src="/assets/about/scene3-rope.svg" alt="ロープアクセスで足場費用ゼロ" decoding="async"/>
-                  </div>
-                  <div class="pb-side pb-text">
-                    <span class="ab-badge">Chapter 03</span>
-                    <h3 class="ab-headline">ロープアクセスで<em>足場費用ゼロ</em></h3>
-                    <p data-para="3">最大の強みは、ロープアクセス工法を採用していることである。ビルやマンションの高所、狭小地の外壁など、足場を組めば数十万円かかる現場でも、ロープアクセスなら足場費用ゼロで、しかも工期を大幅に短縮できる。「足場代が高いから」と諦めていた補修や点検にも、気軽に一歩踏み出していただける体制を整えている。</p>
-                  </div>
+                <div class="pb-face pb-back pb-paper pb-l pb-illust">
+                  <img src="/assets/about/scene2-climate.svg" alt="沖縄の強い日差し・塩害・台風から住まいを守る" decoding="async"/>
                 </div>
-              </article>
+              </div>
 
-              <article class="pb-page" data-idx="4">
-                <div class="pb-inner">
-                  <div class="pb-side pb-illust">
-                    <img src="/assets/about/scene4-onestop.svg" alt="住まいのあらゆる困りごとにワンストップ" decoding="async"/>
-                  </div>
-                  <div class="pb-side pb-text">
-                    <span class="ab-badge">Chapter 04</span>
-                    <h3 class="ab-headline">住まいのすべてを<em>ワンストップ</em>で</h3>
-                    <p data-para="4">外壁・屋根の塗装から、雨漏り診断、エアコンクリーニング、ハウスクリーニング、内部解体、不用品回収まで——住まいに関わるあらゆる困りごとにワンストップで対応する。自社一貫施工で中間マージンを排し、明朗会計・現地調査無料・お見積り無料を徹底している。八重瀬から沖縄全域へ、住まいと家族の暮らしを守り続けたい。</p>
-                  </div>
+              <div class="pb-leaf" data-leaf="2">
+                <div class="pb-face pb-front pb-paper pb-r pb-text">
+                  <span class="ab-badge">Chapter 02</span>
+                  <h3 class="ab-headline">沖縄の気候に<em>本当に耐える</em>塗装を</h3>
+                  <p data-para="2">沖縄の住宅は、強い日差し、絶え間ない塩害、そして毎年やってくる台風という、本土とは比べものにならない過酷な環境にさらされている。だからこそ当社は、塗料の選定から下地処理、防水仕様の設計に至るまで、沖縄の気候に本当に耐え得るかを一つひとつ吟味している。表面を整えるだけの塗装ではなく、10年先も安心して暮らせる住まいを残すことが、当社の使命である。</p>
                 </div>
-              </article>
+                <div class="pb-face pb-back pb-paper pb-l pb-illust">
+                  <img src="/assets/about/scene3-rope.svg" alt="ロープアクセスで足場費用ゼロ" decoding="async"/>
+                </div>
+              </div>
 
-              <!-- 綴じ影は stage 内に閉じ込める -->
-              <div class="pb-spine" aria-hidden="true"></div>
+              <div class="pb-leaf" data-leaf="3">
+                <div class="pb-face pb-front pb-paper pb-r pb-text">
+                  <span class="ab-badge">Chapter 03</span>
+                  <h3 class="ab-headline">ロープアクセスで<em>足場費用ゼロ</em></h3>
+                  <p data-para="3">最大の強みは、ロープアクセス工法を採用していることである。ビルやマンションの高所、狭小地の外壁など、足場を組めば数十万円かかる現場でも、ロープアクセスなら足場費用ゼロで、しかも工期を大幅に短縮できる。「足場代が高いから」と諦めていた補修や点検にも、気軽に一歩踏み出していただける体制を整えている。</p>
+                </div>
+                <div class="pb-face pb-back pb-paper pb-l pb-illust">
+                  <img src="/assets/about/scene4-onestop.svg" alt="住まいのあらゆる困りごとにワンストップ" decoding="async"/>
+                </div>
+              </div>
+
+              <div class="pb-base pb-base-right pb-paper pb-r pb-text">
+                <span class="ab-badge">Chapter 04</span>
+                <h3 class="ab-headline">住まいのすべてを<em>ワンストップ</em>で</h3>
+                <p data-para="4">外壁・屋根の塗装から、雨漏り診断、エアコンクリーニング、ハウスクリーニング、内部解体、不用品回収まで——住まいに関わるあらゆる困りごとにワンストップで対応する。自社一貫施工で中間マージンを排し、明朗会計・現地調査無料・お見積り無料を徹底している。八重瀬から沖縄全域へ、住まいと家族の暮らしを守り続けたい。</p>
+              </div>
+
+              <div class="pb-gutter" aria-hidden="true"></div>
             </div>
 
-            <!-- コントロール -->
             <div class="pb-controls">
               <button class="pb-btn pb-prev" type="button" aria-label="前のページ">◀</button>
-              <div class="pb-dots" role="tablist">
-                <button class="pb-dot" data-goto="1" aria-label="Chapter 1"></button>
-                <button class="pb-dot" data-goto="2" aria-label="Chapter 2"></button>
-                <button class="pb-dot" data-goto="3" aria-label="Chapter 3"></button>
-                <button class="pb-dot" data-goto="4" aria-label="Chapter 4"></button>
+              <div class="pb-dots">
+                <button class="pb-dot" type="button" data-goto="1" aria-label="第1章へ"></button>
+                <button class="pb-dot" type="button" data-goto="2" aria-label="第2章へ"></button>
+                <button class="pb-dot" type="button" data-goto="3" aria-label="第3章へ"></button>
+                <button class="pb-dot" type="button" data-goto="4" aria-label="第4章へ"></button>
               </div>
               <button class="pb-btn pb-next" type="button" aria-label="次のページ">▶</button>
             </div>
-            <div class="pb-counter"><span id="pbCurrent">1</span> <em>/</em> 4</div>
+            <div class="pb-counter" aria-live="polite"><span id="pbCurrent">1</span> <em>/</em> 4</div>
           </div>
 
           <blockquote class="about-quote reveal" id="aboutQuote">
@@ -848,12 +839,14 @@ function applyHero(h) {
 
 function applyAbout(a) {
   if (!a || typeof a !== 'object') return;
-  /* about-book シーンの本文を CMS 段落で上書き（data-para で 1:1 マッピング） */
+  /* 絵本の本文を CMS 段落で上書き（data-para で 1:1 マッピング） */
   if (Array.isArray(a.paragraphs) && a.paragraphs.length) {
     a.paragraphs.forEach(function(p, i) {
-      var el = document.querySelector('.about-book [data-para="' + (i + 1) + '"]');
+      var el = document.querySelector('#pbBook [data-para="' + (i + 1) + '"]');
       if (el) el.textContent = p;
     });
+    var bookEl = document.getElementById('pbBook');
+    if (bookEl) bookEl.dispatchEvent(new Event('pb:content'));   // 本文の長さが変わったので読み上げ・フォーカス対象を更新
     /* 互換用の隠しコンテナも埋める */
     var paras = document.getElementById('aboutParas');
     if (paras) paras.innerHTML = a.paragraphs.map(function(p){return '<p>' + esc(p) + '</p>';}).join('');
@@ -1278,135 +1271,181 @@ var heroEl = document.getElementById('hero');
 if (heroEl) countIO.observe(heroEl);
 
 /* ----------------------------------------------------------
-   About 3Dフリップブック
+   About 絵本（見開き）— リーフ方式
+   章 c を開いているとき、リーフ k は k < c ならめくり済み（左）、k >= c なら未めくり（右）。
+   めくりは 1 枚ずつ直列に行い、連打やドット操作は最新の目標章に集約する。
    ---------------------------------------------------------- */
 (function(){
   var book = document.getElementById('pbBook');
   if (!book) return;
-  var pages = Array.prototype.slice.call(book.querySelectorAll('.pb-page'));
-  var dots  = Array.prototype.slice.call(book.querySelectorAll('.pb-dot'));
-  var prev  = book.querySelector('.pb-prev');
-  var next  = book.querySelector('.pb-next');
+  var stage   = book.querySelector('.pb-stage');
+  var leaves  = Array.prototype.slice.call(book.querySelectorAll('.pb-leaf'));
+  var dots    = Array.prototype.slice.call(book.querySelectorAll('.pb-dot'));
+  var prevBtn = book.querySelector('.pb-prev');
+  var nextBtn = book.querySelector('.pb-next');
   var counter = document.getElementById('pbCurrent');
-  var current = 1;
-  var total = pages.length;
-  var busy = false;
-  var autoTimer = null;
-  var AUTO_MS = 7000;
+  var baseLeft  = book.querySelector('.pb-base-left');
+  var baseRight = book.querySelector('.pb-base-right');
+  var N = leaves.length;            // リーフ枚数（章数 - 1）
+  var TOTAL = N + 1;                // 章数
+  var FLIP_MS = 1000;               // 1 ページずつめくる時間
+  var RIFFLE_MS = 460;              // 2 ページ以上まとめてめくる時の 1 枚あたり
+  var mqMobile = window.matchMedia('(max-width: 780px)');
+  var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  /* モバイル判定は毎回チェック（回転軸を X/Y 切替） */
-  function flipAxis() {
-    return window.matchMedia('(max-width: 780px)').matches ? 'X' : 'Y';
+  var settled = 1;                  // 表示が確定している章
+  var target  = 1;                  // 向かっている章
+  var timer   = null;
+  var turning = null;               // めくり中のリーフ
+
+  /* 静止時の重なり順：右（未めくり）は k が小さいほど上、左（めくり済み）は k が大きいほど上 */
+  function restZ(k) {
+    return k < settled ? 10 + k : 10 + (N - k + 1);
   }
 
-  function update() {
-    var axis = flipAxis();
-    var turnedTransform = 'perspective(1800px) rotate' + axis + '(' + (axis === 'X' ? '' : '-') + '180deg)';
-    var frontTransform  = 'perspective(1800px) rotate' + axis + '(0deg)';
-    pages.forEach(function(p) {
-      var idx = parseInt(p.getAttribute('data-idx'), 10);
-      var inner = p.querySelector('.pb-inner');
-      /* 回転対象は右ページ (pb-text) だけ。折山を軸に */
-      var flipTarget = p.querySelector('.pb-text');
-      p.classList.remove('pb-current', 'pb-turned', 'pb-upcoming');
-      /* 旧テスト残骸を除去 */
-      p.style.removeProperty('translate');
-      p.style.removeProperty('scale');
-      p.style.removeProperty('opacity');
-      if (inner) inner.style.removeProperty('transform');
-      if (idx < current) {
-        p.classList.add('pb-turned');
-        p.style.zIndex = idx;
-        p.style.pointerEvents = 'none';
-        if (flipTarget) flipTarget.style.setProperty('transform', turnedTransform, 'important');
-      } else if (idx === current) {
-        p.classList.add('pb-current');
-        p.style.zIndex = 100;
-        p.style.pointerEvents = 'auto';
-        if (flipTarget) flipTarget.style.setProperty('transform', frontTransform, 'important');
-      } else {
-        p.classList.add('pb-upcoming');
-        p.style.zIndex = (50 - idx);
-        p.style.pointerEvents = 'none';
-        if (flipTarget) flipTarget.style.setProperty('transform', frontTransform, 'important');
-      }
-    });
+  function render() {
     dots.forEach(function(d) {
-      d.classList.toggle('active', parseInt(d.getAttribute('data-goto'), 10) === current);
+      var on = parseInt(d.getAttribute('data-goto'), 10) === settled;
+      d.classList.toggle('active', on);
+      if (on) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current');
     });
-    if (counter) counter.textContent = current;
+    if (counter) counter.textContent = settled;
+    if (prevBtn) prevBtn.disabled = target === 1;     // めくり中でも「戻る」で予約を取り消せるように target 基準
+    /* 見えている 2 面以外は読み上げ・フォーカスの対象から外す（重なっていても DOM には全章ある） */
+    var left  = settled === 1     ? baseLeft  : leaves[settled - 2].querySelector('.pb-back');
+    var right = settled === TOTAL ? baseRight : leaves[settled - 1].querySelector('.pb-front');
+    [baseLeft, baseRight].concat(Array.prototype.slice.call(book.querySelectorAll('.pb-face'))).forEach(function(face) {
+      var hidden = face !== left && face !== right;
+      face.inert = hidden;
+      if (hidden) face.setAttribute('aria-hidden', 'true'); else face.removeAttribute('aria-hidden');
+    });
+    /* 本文が面に収まらないときだけ、キーボードでスクロールできるようにする */
+    book.querySelectorAll('.pb-text p').forEach(function(p) {
+      var scrollable = p.closest('.pb-text') === right && p.scrollHeight > p.clientHeight + 1;
+      if (scrollable) p.setAttribute('tabindex', '0'); else p.removeAttribute('tabindex');
+    });
+    if (nextBtn) {
+      var atEnd = settled === TOTAL;
+      nextBtn.textContent = atEnd ? '↺' : '▶';
+      nextBtn.setAttribute('aria-label', atEnd ? '最初から読む' : '次のページ');
+    }
   }
-  /* 画面サイズ変更時も再計算 */
-  window.addEventListener('resize', function(){ update(); }, { passive: true });
+
+  /* アニメーションなしで settled 章の状態に並べ直す */
+  function layoutInstant() {
+    book.classList.add('pb-instant');
+    leaves.forEach(function(leaf, i) {
+      var k = i + 1;
+      leaf.classList.remove('turn-fwd', 'turn-back', 'pb-peek');
+      leaf.classList.toggle('is-flipped', k < settled);
+      leaf.style.zIndex = restZ(k);
+    });
+    void book.offsetWidth;          // 一度確定させてからトランジションを戻す
+    book.classList.remove('pb-instant');
+    render();
+  }
+
+  function step() {
+    if (settled === target) { turning = null; return; }
+    var forward = target > settled;
+    var k = forward ? settled : settled - 1;          // 今回めくるリーフ
+    var leaf = leaves[k - 1];
+    var dur = mqReduce.matches ? 0 : (Math.abs(target - settled) > 1 ? RIFFLE_MS : FLIP_MS);
+    leaf.classList.remove('pb-peek');
+    leaf.style.setProperty('--pb-dur', dur + 'ms');
+    leaf.style.zIndex = 50;                           // めくり中だけ最前面
+    leaf.classList.add(forward ? 'turn-fwd' : 'turn-back');
+    leaf.classList.toggle('is-flipped', forward);
+    turning = leaf;
+    /* transitionend は動き軽減設定で発火しないことがあるのでタイマーで確定する */
+    timer = setTimeout(function() {
+      leaf.classList.remove('turn-fwd', 'turn-back');
+      settled += forward ? 1 : -1;
+      leaf.style.zIndex = restZ(k);
+      render();
+      timer = null;
+      step();
+    }, dur + 40);
+  }
 
   function goTo(n) {
-    if (busy) return;
-    n = Math.max(1, Math.min(total, n));
-    if (n === current) return;
-    busy = true;
-    current = n;
-    update();
-    setTimeout(function() { busy = false; }, 1050);
+    target = Math.max(1, Math.min(TOTAL, n));
+    render();
+    if (!timer) step();
   }
+  function next() { goTo(settled === TOTAL && target === TOTAL ? 1 : target + 1); }
+  function prev() { goTo(target - 1); }
 
-  function nextPage() {
-    if (current >= total) { goTo(1); return; }
-    goTo(current + 1);
-  }
-  function prevPage() {
-    if (current <= 1) { goTo(total); return; }
-    goTo(current - 1);
-  }
-  if (next) next.addEventListener('click', function(){ resetAuto(); nextPage(); });
-  if (prev) prev.addEventListener('click', function(){ resetAuto(); prevPage(); });
+  if (nextBtn) nextBtn.addEventListener('click', next);
+  if (prevBtn) prevBtn.addEventListener('click', prev);
   dots.forEach(function(d) {
-    d.addEventListener('click', function() {
-      resetAuto();
-      goTo(parseInt(d.getAttribute('data-goto'), 10));
-    });
+    d.addEventListener('click', function() { goTo(parseInt(d.getAttribute('data-goto'), 10)); });
   });
 
-  // キーボード操作
-  book.setAttribute('tabindex', '0');
+  /* ページそのものをクリックしてめくる（右／下のページ＝次、左／上のページ＝前） */
+  var swipedAt = 0;
+  stage.addEventListener('click', function(e) {
+    if (Date.now() - swipedAt < 600) return;                            // スワイプ直後の合成クリックで二重にめくらない
+    if (window.getSelection && String(window.getSelection())) return;   // 文字選択中は無視
+    var r = stage.getBoundingClientRect();
+    var forwardSide = mqMobile.matches ? (e.clientY - r.top) > r.height / 2
+                                       : (e.clientX - r.left) > r.width / 2;
+    if (forwardSide) next(); else prev();
+  });
+
   book.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowRight') { resetAuto(); nextPage(); }
-    if (e.key === 'ArrowLeft')  { resetAuto(); prevPage(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
   });
 
-  // スワイプ（モバイル）
   var tx = 0, ty = 0;
   book.addEventListener('touchstart', function(e) {
     tx = e.touches[0].clientX; ty = e.touches[0].clientY;
-  }, {passive: true});
+  }, { passive: true });
   book.addEventListener('touchend', function(e) {
     var dx = e.changedTouches[0].clientX - tx;
     var dy = e.changedTouches[0].clientY - ty;
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-      resetAuto();
-      if (dx < 0) nextPage(); else prevPage();
+      swipedAt = Date.now();
+      if (dx < 0) next(); else prev();
     }
   });
+  book.addEventListener('pb:content', render);
 
-  // 自動めくり（画面内に入ったら開始）
-  function startAuto() {
-    if (autoTimer) return;
-    autoTimer = setInterval(nextPage, AUTO_MS);
+  /* PC⇔モバイルで回転軸が変わるので、めくり途中なら目標章で即確定して並べ直す */
+  function onLayoutChange() {
+    if (timer) { clearTimeout(timer); timer = null; }
+    if (turning) turning.classList.remove('turn-fwd', 'turn-back');
+    turning = null;
+    settled = target;
+    layoutInstant();
   }
-  function stopAuto() {
-    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+  if (mqMobile.addEventListener) mqMobile.addEventListener('change', onLayoutChange);
+  else if (mqMobile.addListener) mqMobile.addListener(onLayoutChange);
+
+  /* 初めて画面に入ったら一度だけ紙の角を持ち上げて「めくれる」ことを伝える */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        if (mqReduce.matches) return;
+        setTimeout(function() {
+          var leaf = leaves[settled - 1];
+          if (!leaf || timer || settled !== 1) return;
+          leaf.classList.add('pb-peek');
+          leaf.addEventListener('animationend', function done(ev) {
+            if (ev.target !== leaf) return;
+            leaf.classList.remove('pb-peek');
+            leaf.removeEventListener('animationend', done);
+          });
+        }, 500);
+      });
+    }, { threshold: 0.4 });
+    io.observe(book);
   }
-  function resetAuto() { stopAuto(); startAuto(); }
-  book.addEventListener('mouseenter', stopAuto);
-  book.addEventListener('mouseleave', startAuto);
 
-  var io = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) startAuto(); else stopAuto();
-    });
-  }, { threshold: 0.3 });
-  io.observe(book);
-
-  update();
+  layoutInstant();
 })();
 
 /* ----------------------------------------------------------
