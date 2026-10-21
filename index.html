@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="shared.css?v=20261017">
+<link rel="stylesheet" href="shared.css?v=20261021">
 
 <!-- Google Search Console 認証 -->
 <meta name="google-site-verification" content="LZg90oxtbqi0v6An7Fc0uO3ufbqcmW4_Qp9mCI2u6wk" />
@@ -57,6 +57,8 @@
   },
   "openingHours": ["Mo-Sa 08:00-17:00"],
   "priceRange": "¥¥",
+  "areaServed": { "@type": "AdministrativeArea", "name": "沖縄県" },
+  "knowsAbout": ["外壁塗装", "屋根工事", "防水工事", "雨漏り調査", "ロープアクセス工法", "赤外線ドローン調査", "エアコンクリーニング", "リフォーム"],
   "sameAs": [
     "https://sumai-dr-smile-okinawa.com/",
     "https://www.instagram.com/sumai_dr.smile/",
@@ -65,6 +67,40 @@
     "https://map.yahoo.co.jp/v3/place/m8D54HiAciE",
     "https://www.navitime.co.jp/poi?spt=00011.100249198",
     "https://townpage.goo.ne.jp/shopdetail.php?matomeid=520000163129350001"
+  ]
+}
+</script>
+<!-- よくある質問の構造化データ。下の3件は「ホテル・マンション・ビル」セクションの固定Q&A。
+     シートのFAQは functions/index.js が配信時にここへ追記する -->
+<script id="faq-jsonld" type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "足場を組む工事と比べて、どれくらい安くなりますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "建物と工事内容によって変わります。那覇市内の8階建てビルでは、足場込みで約42万円の見積もりだった雨漏り補修を、ロープアクセスで約6万円で行いました。建物が高く大きいほど差は大きくなります。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "営業中のホテルや、入居者がいるマンションでも工事できますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "できます。足場で建物を囲わないため、外観や出入口をふさがずに工事できます。お客様や入居者の方への影響を抑えたい建物に向いています。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "何度直しても雨漏りが止まりません。",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "原因の場所を調べないまま工事すると、別の場所から漏れ続けることがあります。赤外線ドローンとロープでの調査で水の入り口を突き止めてから補修するので、まずは調査からご相談ください。"
+      }
+    }
   ]
 }
 </script>
@@ -93,6 +129,7 @@
   <nav class="sb-nav" aria-label="セクションナビ">
     <a href="#menu"     class="sb-link">SERVICES</a>
     <a href="#features" class="sb-link">STRENGTHS</a>
+    <a href="#buildings" class="sb-link">BUILDINGS</a>
     <a href="#reviews"  class="sb-link">REVIEWS</a>
     <a href="#blog"     class="sb-link">BLOG</a>
     <a href="#access"   class="sb-link">ACCESS</a>
@@ -125,6 +162,7 @@
       <li><a href="#about"    class="nav-mobile-link">私たちについて</a></li>
       <li><a href="#menu"     class="nav-mobile-link">サービス内容</a></li>
       <li><a href="#features" class="nav-mobile-link">選ばれる理由</a></li>
+      <li><a href="#buildings" class="nav-mobile-link">ホテル・マンション・ビルの方へ</a></li>
       <li><a href="#reviews"  class="nav-mobile-link">お客様の声</a></li>
       <li><a href="#blog"     class="nav-mobile-link">お知らせ・ブログ</a></li>
       <li><a href="#access"   class="nav-mobile-link">アクセス</a></li>
@@ -375,13 +413,101 @@
   </section>
 
   <!-- ============================================================
-       FOR YOU — 04
+       BUILDINGS — 04（ホテル・マンション・ビル向け。CMS 外の固定セクション）
+       ============================================================ -->
+  <section class="highrise-sec ed-sec" id="buildings">
+    <div class="container">
+      <div class="ed-grid">
+        <div class="ed-aside">
+          <span class="ed-num" aria-hidden="true">04</span>
+          <div class="ed-vline" aria-hidden="true"></div>
+          <span class="ed-en" aria-hidden="true">Buildings</span>
+        </div>
+        <div class="ed-main">
+          <div class="sec-head sec-head-left">
+            <span class="eyebrow">For Hotels &amp; Buildings</span>
+            <h2 class="section-title reveal">高い建物の雨漏り・外壁は、<br>足場を組まずに直す</h2>
+            <span class="sec-line line-draw"></span>
+          </div>
+          <p class="hr-lead">ホテル・マンション・貸しビルのオーナー様へ。赤外線カメラを積んだドローンで建物全体を調べ、怪しい場所だけをロープで降りて確かめ、そのまま補修します。足場の組み立てと解体がいらないので、費用も工期も抑えられ、営業や入居を続けたまま工事できます。</p>
+
+          <ol class="hr-steps">
+            <li class="hr-step reveal">
+              <span class="hr-step-num">STEP 1</span>
+              <h3>赤外線ドローンで調べる</h3>
+              <p>外壁の温度の違いを上空から撮影します。中に水が回っている部分は周りより冷たく写るため、見た目では分からない雨漏りの疑いがある場所を絞り込めます。</p>
+            </li>
+            <li class="hr-step reveal">
+              <span class="hr-step-num">STEP 2</span>
+              <h3>ロープで降りて確かめる</h3>
+              <p>疑わしい場所へロープで降り、叩いて音で調べる打診や目視で直接確かめます。必要に応じて散水調査も行い、水の入り口を突き止めます。</p>
+            </li>
+            <li class="hr-step reveal">
+              <span class="hr-step-num">STEP 3</span>
+              <h3>そのまま補修する</h3>
+              <p>原因が分かったら、ロープのまま補修まで行います。足場の組み立てと解体（約2日）がいらず、調査だけなら半日ほどで終わることもあります。</p>
+            </li>
+          </ol>
+
+          <div class="hr-case reveal">
+            <p class="hr-case-label">施工事例｜那覇市内・8階建ての貸しビル</p>
+            <p class="hr-case-text">7階の窓まわりから雨漏りし、7階と6階の2フロアが貸し出せない状態でした。</p>
+            <div class="hr-compare">
+              <div class="hr-compare-item">
+                <span class="hr-compare-k">足場を組む工事の見積もり</span>
+                <span class="hr-compare-v hr-compare-v--old">約42<small>万円</small></span>
+              </div>
+              <span class="hr-compare-arrow" aria-hidden="true">→</span>
+              <div class="hr-compare-item">
+                <span class="hr-compare-k">ロープアクセスでの補修</span>
+                <span class="hr-compare-v">約6<small>万円</small></span>
+              </div>
+            </div>
+            <p class="hr-case-text">費用はおよそ7分の1。雨漏りは止まり、2フロアとも再び貸し出せるようになりました。</p>
+            <p class="hr-note">※ 金額は建物の高さ・形・工事内容によって変わります。現地調査とお見積もりは無料です。</p>
+          </div>
+
+          <h3 class="hr-sub">こんな建物に向いています</h3>
+          <ul class="hr-fit">
+            <li>営業中のホテル・リゾートホテル</li>
+            <li>入居者がいる分譲・賃貸マンション</li>
+            <li>貸しビル・オフィスビル</li>
+            <li>足場を組む場所がない狭い敷地の建物</li>
+          </ul>
+          <p class="hr-note">建物が高く大きいほど、足場をなくしたときの費用と工期の差が大きくなります。</p>
+
+          <h3 class="hr-sub">よくあるご質問</h3>
+          <div class="faq-list hr-faq">
+            <div class="faq-item">
+              <button class="faq-q" type="button">足場を組む工事と比べて、どれくらい安くなりますか？</button>
+              <div class="faq-a">建物と工事内容によって変わります。那覇市内の8階建てビルでは、足場込みで約42万円の見積もりだった雨漏り補修を、ロープアクセスで約6万円で行いました。建物が高く大きいほど差は大きくなります。</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" type="button">営業中のホテルや、入居者がいるマンションでも工事できますか？</button>
+              <div class="faq-a">できます。足場で建物を囲わないため、外観や出入口をふさがずに工事できます。お客様や入居者の方への影響を抑えたい建物に向いています。</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" type="button">何度直しても雨漏りが止まりません。</button>
+              <div class="faq-a">原因の場所を調べないまま工事すると、別の場所から漏れ続けることがあります。赤外線ドローンとロープでの調査で水の入り口を突き止めてから補修するので、まずは調査からご相談ください。</div>
+            </div>
+          </div>
+
+          <div class="for-you-cta">
+            <a href="tel:0989875500" class="btn btn-primary btn-ripple">建物の調査を無料で相談する &nbsp;→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOR YOU — 05
        ============================================================ -->
   <section class="for-you ed-sec" id="foryou">
     <div class="container">
       <div class="ed-grid">
         <div class="ed-aside">
-          <span class="ed-num" aria-hidden="true">04</span>
+          <span class="ed-num" aria-hidden="true">05</span>
           <div class="ed-vline" aria-hidden="true"></div>
           <span class="ed-en" aria-hidden="true">For You</span>
         </div>
@@ -401,13 +527,13 @@
   </section>
 
   <!-- ============================================================
-       REVIEWS — 05
+       REVIEWS — 06
        ============================================================ -->
   <section class="reviews-sec ed-sec" id="reviews">
     <div class="container">
       <div class="ed-grid">
         <div class="ed-aside">
-          <span class="ed-num" aria-hidden="true">05</span>
+          <span class="ed-num" aria-hidden="true">06</span>
           <div class="ed-vline" aria-hidden="true"></div>
           <span class="ed-en" aria-hidden="true">Reviews</span>
         </div>
@@ -434,13 +560,13 @@
   </section>
 
   <!-- ============================================================
-       BLOG — 06
+       BLOG — 07
        ============================================================ -->
   <section class="ed-sec" id="blog">
     <div class="container">
       <div class="ed-grid">
         <div class="ed-aside">
-          <span class="ed-num" aria-hidden="true">06</span>
+          <span class="ed-num" aria-hidden="true">07</span>
           <div class="ed-vline" aria-hidden="true"></div>
           <span class="ed-en" aria-hidden="true">Blog</span>
         </div>
@@ -457,13 +583,13 @@
   </section>
 
   <!-- ============================================================
-       ACCESS — 07
+       ACCESS — 08
        ============================================================ -->
   <section class="access-sec ed-sec" id="access">
     <div class="container">
       <div class="ed-grid">
         <div class="ed-aside">
-          <span class="ed-num" aria-hidden="true">07</span>
+          <span class="ed-num" aria-hidden="true">08</span>
           <div class="ed-vline" aria-hidden="true"></div>
           <span class="ed-en" aria-hidden="true">Access</span>
         </div>
@@ -516,13 +642,13 @@
   </section>
 
   <!-- ============================================================
-       SNS — 08
+       SNS — 09
        ============================================================ -->
   <section class="sns-sec ed-sec" id="sns">
     <div class="container">
       <div class="ed-grid">
         <div class="ed-aside">
-          <span class="ed-num" aria-hidden="true">08</span>
+          <span class="ed-num" aria-hidden="true">09</span>
           <div class="ed-vline" aria-hidden="true"></div>
           <span class="ed-en" aria-hidden="true">SNS</span>
         </div>
@@ -539,13 +665,13 @@
   </section>
 
   <!-- ============================================================
-       ESTIMATE / DELIVERY — 09
+       ESTIMATE / DELIVERY — 10
        ============================================================ -->
   <section class="estimate-sec ed-sec" id="estimate">
     <div class="container">
       <div class="ed-grid">
         <div class="ed-aside">
-          <span class="ed-num" aria-hidden="true">09</span>
+          <span class="ed-num" aria-hidden="true">10</span>
           <div class="ed-vline" aria-hidden="true"></div>
           <span class="ed-en" aria-hidden="true">Estimate</span>
         </div>
@@ -562,13 +688,13 @@
   </section>
 
   <!-- ============================================================
-       FAQ — 10
+       FAQ — 11
        ============================================================ -->
   <section class="faq-sec ed-sec" id="faq">
     <div class="container">
       <div class="ed-grid">
         <div class="ed-aside">
-          <span class="ed-num" aria-hidden="true">10</span>
+          <span class="ed-num" aria-hidden="true">11</span>
           <div class="ed-vline" aria-hidden="true"></div>
           <span class="ed-en" aria-hidden="true">FAQ</span>
         </div>
@@ -1113,6 +1239,29 @@ function applyFAQ(items) {
     '</div>';
   }).join('');
   initFAQ();
+  syncFaqJsonLd(items);
+}
+
+/* FAQPage の構造化データを、画面の FAQ（固定Q&A＋シート）と同じ内容に揃える */
+function syncFaqJsonLd(items) {
+  var el = document.getElementById('faq-jsonld');
+  if (!el) return;
+  var qa = [];
+  document.querySelectorAll('.hr-faq .faq-item').forEach(function(it) {
+    var q = it.querySelector('.faq-q'), a = it.querySelector('.faq-a');
+    if (q && a) qa.push({ q: q.textContent.trim(), a: a.textContent.trim() });
+  });
+  items.forEach(function(f) {
+    var q = String(f.q || f.question || '').trim(), a = String(f.a || f.answer || '').trim();
+    if (q && a) qa.push({ q: q, a: a });
+  });
+  el.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: qa.map(function(x) {
+      return { '@type': 'Question', name: x.q, acceptedAnswer: { '@type': 'Answer', text: x.a } };
+    })
+  });
 }
 
 function applyCTA(c) {
@@ -1209,6 +1358,7 @@ document.querySelectorAll('.reveal, .reveal-stagger, .reveal-blur, .reveal-rotat
 /* ----------------------------------------------------------
    FAQ アコーディオン
    ---------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', function() { initFAQ(); });   // 固定Q&A・配信時に埋め込んだFAQもCMS読込前から開閉できるように
 function initFAQ() {
   document.querySelectorAll('.faq-q').forEach(function(btn) {
     btn.removeEventListener('click', onFaqClick);
