@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="shared.css?v=20261021">
+<link rel="stylesheet" href="shared.css?v=20261021b">
 
 <!-- Google Search Console 認証 -->
 <meta name="google-site-verification" content="LZg90oxtbqi0v6An7Fc0uO3ufbqcmW4_Qp9mCI2u6wk" />
@@ -658,6 +658,11 @@
             <h2 class="section-title reveal">SNS</h2>
             <span class="sec-line line-draw"></span>
           </div>
+          <!-- Instagram リール：シートの reels タブにURLがあるときだけ表示（applyReels） -->
+          <div class="reels-wrap" id="reelsWrap" hidden>
+            <h3 class="reels-title">Instagramのリール動画</h3>
+            <div class="reels-grid" id="reelsGrid"></div>
+          </div>
           <div class="sns-grid reveal-stagger" id="snsGrid"></div>
         </div>
       </div>
@@ -1213,6 +1218,59 @@ function applySNS(items) {
   }).join('');
 }
 
+/* Instagram 公式の埋め込みで最新リールを並べる。
+   embed.js は重いので、SNS セクションが近づいてから 1 回だけ読み込む */
+var REELS_MAX = 3;
+function applyReels(items) {
+  var wrap = document.getElementById('reelsWrap');
+  var grid = document.getElementById('reelsGrid');
+  if (!wrap || !grid) return;
+  var list = (Array.isArray(items) ? items : []).filter(function(r) {
+    return r && /^https:\/\/www\.instagram\.com\/(reel|p)\/[A-Za-z0-9_-]+\/$/.test(r.url || '');
+  }).slice(0, REELS_MAX);
+  var sig = list.map(function(r) { return r.url + '\t' + (r.caption || ''); }).join('\n');
+  if (grid.dataset.sig === sig) {                 // キャッシュ→最新で同じ内容なら作り直さない
+    if (list.length && grid.querySelector('blockquote.instagram-media')) loadInstagramEmbed(wrap);   // 未変換なら読み直す
+    return;
+  }
+  grid.dataset.sig = sig;
+  wrap.hidden = !list.length;
+  if (!list.length) { grid.innerHTML = ''; return; }
+  grid.innerHTML = list.map(function(r) {
+    return '<div class="reel-item">' +
+      '<blockquote class="instagram-media" data-instgrm-permalink="' + esc(r.url) + '?utm_source=ig_embed" data-instgrm-version="14">' +
+        '<a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">' + esc(r.caption || 'Instagramでリールを見る') + '</a>' +
+      '</blockquote>' +
+    '</div>';
+  }).join('');
+  loadInstagramEmbed(wrap);
+}
+function loadInstagramEmbed(target) {
+  if (window.instgrm && window.instgrm.Embeds) { window.instgrm.Embeds.process(); return; }
+  if (loadInstagramEmbed.pending) return;
+  loadInstagramEmbed.pending = true;
+  var inject = function() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.instagram.com/embed.js';
+    s.onload = function() {                      // 読込中に差し替わった分も確実に変換する
+      if (window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+    };
+    s.onerror = function() {                     // 失敗したら次の applyReels で読み直せるように戻す
+      loadInstagramEmbed.pending = false;
+      if (s.parentNode) s.parentNode.removeChild(s);
+    };
+    document.body.appendChild(s);
+  };
+  if (!('IntersectionObserver' in window)) { inject(); return; }
+  var io = new IntersectionObserver(function(entries) {
+    if (!entries.some(function(e) { return e.isIntersecting; })) return;
+    io.disconnect();
+    inject();
+  }, { rootMargin: '800px 0px' });
+  io.observe(target);
+}
+
 function applyDelivery(items) {
   var grid = document.getElementById('deliveryGrid');
   if (!grid || !Array.isArray(items) || !items.length) return;
@@ -1295,6 +1353,7 @@ function applyAll(d) {
   if (d.blog)      applyBlog(d.blog);
   if (d.access)    applyAccess(d.access);
   if (d.sns)       applySNS(d.sns);
+  if (d.reels)     applyReels(d.reels);
   if (d.delivery)  applyDelivery(d.delivery);
   if (d.faq)       applyFAQ(d.faq);
   if (d.cta)       applyCTA(d.cta);

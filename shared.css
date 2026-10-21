@@ -1931,6 +1931,44 @@ a.blog-card { text-decoration: none; color: inherit; }
    ============================================================ */
 .sns-sec { background: var(--grad-sunrise); }
 
+/* Instagram リール（公式埋め込み。中身の見た目は Instagram 側） */
+.reels-wrap { margin-bottom: 40px; }
+.reels-title {
+  font-family: var(--sans-jp);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.reel-item { min-width: 0; }
+.reel-item .instagram-media {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  border-radius: 14px !important;
+  background: #fff;
+}
+.reel-item blockquote.instagram-media { padding: 16px; font-size: 13px; }   /* embed.js 読込前の仮表示 */
+@media (max-width: 960px) {
+  .reels-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 6px;
+  }
+  .reels-grid::-webkit-scrollbar { display: none; }
+  .reel-item { flex: 0 0 min(80vw, 320px); scroll-snap-align: start; }
+}
+
 .sns-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
